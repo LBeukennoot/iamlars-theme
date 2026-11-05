@@ -19,7 +19,14 @@ function theme_vite_assets() {
         false
     );
 }
+
 add_action('wp_enqueue_scripts', 'theme_vite_assets');
+
+function theme_setup() {
+    add_theme_support('post-thumbnails');
+}
+
+add_action('after_setup_theme', 'theme_setup');
 
 // Vite modules require type="module" in the script tag
 add_filter('script_loader_tag', function ($tag, $handle) {

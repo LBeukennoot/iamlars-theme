@@ -1,6 +1,11 @@
-<footer class="mt-12 border-t border-slate-200 py-6 text-center text-sm text-slate-500">
-        <p>&copy; <?php echo date('Y'); ?> <?php bloginfo('name'); ?>. All rights reserved.</p>
+</main>
+
+<?php if (!is_front_page()): ?>
+    <footer class="w-full mt-12 py-6">
+        <p class="w-full text-center!">&copy; <?php echo date('Y'); ?> <?php bloginfo('name'); ?>. All rights reserved.</p>
     </footer>
-    <?php wp_footer(); ?>
+<?php endif; ?>
+<?php wp_footer(); ?>
 </body>
+
 </html>

@@ -1,5 +1,243 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'Corben';
+  src: url('fonts/Corben-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Lexend';
+  src: url('fonts/Lexend-VariableFont_wght.ttf');
+}
 
 @theme {
-    --color-primary: #A4BD6D;
+  --color-primary: #a4bd6d;
+  --color-secondary: #637b2d;
+
+  --blur-4xl: 10rem;
+
+  --shadow-xl: 0 0 30px rgba(0, 0, 0, 0.2);
+
+  --font-display: 'Corben', serif;
+  --font-sans: 'Lexend', sans-serif;
+}
+
+@utility shadow-vignette-heavy {
+  box-shadow: inset 0 0 100px 25px var(--color-primary);
+}
+
+[x-cloak] {
+  display: none !important;
+}
+
+/* ==========================================================================
+   WORDPRESS CORE CLASS OVERRIDES
+   ========================================================================== */
+
+p,
+li,
+h1,
+h2,
+h3 {
+  @apply text-left text-secondary;
+}
+
+h1,
+h2,
+h3 {
+  @apply font-display;
+}
+
+h1 {
+  @apply text-6xl;
+}
+
+h2 {
+  @apply text-4xl font-bold;
+}
+
+h3 {
+  @apply text-2xl font-black;
+}
+
+li {
+  @apply ml-7 list-disc marker:text-primary;
+}
+
+img {
+  @apply rounded-3xl mx-auto;
+}
+
+figure {
+  @apply flex flex-col justify-center;
+}
+
+/* --------------------------------------------------------------------------
+   1. Standard Post Image Alignments & Captions (Legacy & Block)
+   -------------------------------------------------------------------------- */
+
+/* Center Alignment */
+.aligncenter,
+div.aligncenter,
+.wp-block-image.aligncenter {
+  @apply mx-auto my-8 block text-center;
+}
+
+/* Left Alignment */
+.alignleft,
+img.alignleft,
+.wp-block-image.alignleft {
+  @apply float-left mr-6 mb-4 mt-2 max-w-full;
+}
+
+/* Right Alignment */
+.alignright,
+img.alignright,
+.wp-block-image.alignright {
+  @apply float-right ml-6 mb-4 mt-2 max-w-full;
+}
+
+/* None / Full Width within flow */
+.alignnone,
+img.alignnone,
+.wp-block-image.alignnone {
+  @apply my-6 block max-w-full h-auto;
+}
+
+/* Captions */
+.wp-caption,
+.wp-block-image figcaption,
+.wp-block-embed figcaption,
+.wp-block-gallery figcaption {
+  @apply mx-auto table;
+
+  @apply bg-primary text-white font-display rounded-2xl mt-3 px-2 pb-0.5 text-sm lowercase;
+}
+
+.wp-caption-text {
+  @apply text-xs text-white mt-1;
+}
+
+/* --------------------------------------------------------------------------
+   2. Gutenberg Layout Alignments (Wide & Full Bleed)
+   -------------------------------------------------------------------------- */
+
+/* Wide Width (extends past article column) */
+.alignwide,
+.wp-block-group.alignwide,
+.wp-block-image.alignwide {
+  @apply max-w-6xl mx-auto my-12;
+}
+
+/* Full Width (edge-to-edge screen bleed) */
+.alignfull,
+.wp-block-group.alignfull,
+.wp-block-image.alignfull {
+  @apply w-screen max-w-none relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] my-16;
+}
+
+/* --------------------------------------------------------------------------
+   3. Common Core Blocks (Typography & Embeds)
+   -------------------------------------------------------------------------- */
+
+/* Blockquote */
+.wp-block-quote {
+  @apply pl-6 border-l-2 border-primary my-8 text-white/90;
+}
+
+.wp-block-quote.is-style-large {
+  @apply text-2xl font-light leading-relaxed my-12;
+}
+
+.wp-block-quote cite {
+  @apply block text-white/50 font-normal mt-3;
+}
+
+/* Pullquote */
+.wp-block-pullquote {
+  @apply my-10 border-y border-white/10 py-6 text-center;
+}
+
+.wp-block-pullquote blockquote p {
+  @apply font-semibold text-white;
+}
+
+/* Code & Preformatted */
+.wp-block-code,
+pre.wp-block-preformatted {
+  @apply bg-secondary border border-white/10 rounded-2xl p-4 my-6 text-xs font-mono text-white overflow-x-auto;
+}
+
+/* Separator / Divider */
+.wp-block-separator {
+  @apply border-none border-b border-white/15 my-12 mx-auto w-24;
+}
+
+.wp-block-separator.is-style-wide {
+  @apply w-full max-w-2xl;
+}
+
+.wp-block-separator.is-style-dots {
+  @apply text-center text-white/40 tracking-[1em] text-lg border-none;
+}
+
+/* Responsive Embeds (YouTube, Vimeo, Twitter) */
+.wp-block-embed,
+.wp-block-embed-youtube {
+  @apply my-8 overflow-hidden rounded-2xl border border-white/10 shadow-xl;
+}
+
+.wp-block-embed__wrapper {
+  @apply relative w-full aspect-video;
+}
+
+.wp-block-embed__wrapper iframe {
+  @apply absolute inset-0 w-full h-full;
+}
+
+/* --------------------------------------------------------------------------
+   4. Native Gutenberg Buttons & Columns
+   -------------------------------------------------------------------------- */
+
+.wp-block-buttons {
+  @apply flex flex-wrap gap-4 my-6 items-center;
+}
+
+.wp-block-button__link {
+  @apply inline-flex items-center justify-center text-xs font-semibold py-3 px-6 rounded-xl bg-primary hover:brightness-110 text-white transition-all shadow-md shadow-primary/20 cursor-pointer;
+}
+
+/* Outline Style */
+.wp-block-button.is-style-outline .wp-block-button__link {
+  @apply bg-transparent border border-white/30 text-white hover:border-white shadow-none;
+}
+
+/* Columns */
+.wp-block-columns {
+  @apply flex flex-col md:flex-row gap-6 my-8;
+}
+
+.wp-block-column {
+  @apply flex-1 min-w-0;
+}
+
+/* --------------------------------------------------------------------------
+   5. Standard WordPress Utilities & Accessibility
+   -------------------------------------------------------------------------- */
+
+/* Screen reader only (hidden visually, readable by assistive tech) */
+.screen-reader-text {
+  @apply sr-only;
+}
+
+.screen-reader-text:focus {
+  @apply not-sr-only fixed top-4 left-4 z-50 bg-white text-slate-900 px-4 py-2 rounded-lg shadow-xl font-medium;
+}
+
+/* Clearfix for floated post images */
+.clear,
+.entry-content::after {
+  content: '';
+  display: table;
+  clear: both;
 }
