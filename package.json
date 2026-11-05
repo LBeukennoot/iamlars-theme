@@ -1,0 +1,13 @@
+{
+  "name": "iamlars-theme",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "npx @tailwindcss/cli -i ./src/main.css -o ./dist/main.css --watch",
+    "build": "npx @tailwindcss/cli -i ./src/main.css -o ./dist/main.css --minify"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.4",
+    "tailwindcss": "^4.3.4"
+  }
+}
