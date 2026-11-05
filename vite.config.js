@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     {
-      name: 'php-reload',
+      name: 'live-reload-php',
       handleHotUpdate({ file, server }) {
         if (file.endsWith('.php')) {
           server.ws.send({ type: 'full-reload', path: '*' });
@@ -14,16 +14,25 @@ export default defineConfig({
     },
   ],
   server: {
-    cors: true,
-    strictPort: true,
+    host: '0.0.0.0', // Accepts connections from localhost and inside containers
     port: 5173,
+    strictPort: true,
+    cors: true,
+    origin: 'http://localhost:5173',
+    watch: {
+      usePolling: true, // Guarantees file changes register across Docker mounted volumes
+    },
+    hmr: {
+      host: 'localhost',
+      port: 5173,
+    },
   },
   build: {
     outDir: 'dist',
     emptyOutDir: true,
     manifest: true,
     rollupOptions: {
-      input: 'src/input.css',
+      input: 'src/main.js',
     },
   },
 });

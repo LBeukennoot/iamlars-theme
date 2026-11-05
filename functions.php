@@ -1,19 +1,30 @@
 <?php
-function theme_enqueue_scripts() {
-    $css_file = get_template_directory() . '/dist/main.css';
-    $version  = file_exists($css_file) ? filemtime($css_file) : '1.0.0';
+define('VITE_SERVER', 'http://localhost:5173');
 
-    wp_enqueue_style(
-        'theme-tailwind-styles',
-        get_template_directory_uri() . '/dist/main.css',
+function theme_vite_assets() {
+    // In local development, pull straight from Vite server
+    wp_enqueue_script(
+        'vite-client',
+        VITE_SERVER . '/@vite/client',
         array(),
-        $version
+        null,
+        false
+    );
+
+    wp_enqueue_script(
+        'theme-main',
+        VITE_SERVER . '/src/main.js',
+        array('vite-client'),
+        null,
+        false
     );
 }
-add_action('wp_enqueue_scripts', 'theme_enqueue_scripts');
+add_action('wp_enqueue_scripts', 'theme_vite_assets');
 
-function theme_setup() {
-    add_theme_support('title-tag');
-    add_theme_support('post-thumbnails');
-}
-add_action('after_setup_theme', 'theme_setup');
+// Vite modules require type="module" in the script tag
+add_filter('script_loader_tag', function ($tag, $handle) {
+    if (in_array($handle, array('vite-client', 'theme-main'), true)) {
+        return str_replace('<script ', '<script type="module" ', $tag);
+    }
+    return $tag;
+}, 10, 2);
