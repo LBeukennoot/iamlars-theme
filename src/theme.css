@@ -1,0 +1,25 @@
+@font-face {
+  font-family: 'Corben';
+  src: url('assets/fonts/Corben-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Lexend';
+  src: url('assets/fonts/Lexend-VariableFont_wght.ttf');
+}
+
+@theme {
+  --color-primary: #a4bd6d;
+  --color-secondary: #637b2d;
+
+  --blur-4xl: 10rem;
+
+  --shadow-xl: 0 0 30px rgba(0, 0, 0, 0.2);
+
+  --font-display: 'Corben', serif;
+  --font-sans: 'Lexend', sans-serif;
+}
+
+@utility shadow-vignette-heavy {
+  box-shadow: inset 0 0 100px 25px var(--color-primary);
+}

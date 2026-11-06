@@ -1,30 +1,5 @@
 @import 'tailwindcss';
-
-@font-face {
-  font-family: 'Corben';
-  src: url('fonts/Corben-Regular.ttf');
-}
-
-@font-face {
-  font-family: 'Lexend';
-  src: url('fonts/Lexend-VariableFont_wght.ttf');
-}
-
-@theme {
-  --color-primary: #a4bd6d;
-  --color-secondary: #637b2d;
-
-  --blur-4xl: 10rem;
-
-  --shadow-xl: 0 0 30px rgba(0, 0, 0, 0.2);
-
-  --font-display: 'Corben', serif;
-  --font-sans: 'Lexend', sans-serif;
-}
-
-@utility shadow-vignette-heavy {
-  box-shadow: inset 0 0 100px 25px var(--color-primary);
-}
+@import './theme.css';
 
 [x-cloak] {
   display: none !important;
@@ -69,9 +44,67 @@ img {
 }
 
 figure {
-  @apply flex flex-col justify-center;
+  @apply flex flex-col justify-center mb-0;
 }
 
+a {
+  @apply underline;
+}
+
+.wp-block-paragraph a[target="_blank"]::after, 
+li a[target="_blank"]::after,
+td a[target="_blank"]::after,
+.wp-block-button a[target="_blank"]::after {
+	width: 13px;
+	height: 13px;
+	display: inline-block;
+	content: '';
+	-webkit-mask: url('./assets/icons/external-link.svg') no-repeat 50% 50%;
+	mask: url('./assets/icons/external-link.svg') no-repeat 50% 50%;
+	-webkit-mask-size: cover;
+	mask-size: cover;
+	background-color: var(--color-secondary);
+	margin: 0 0.3rem 0 0.2rem;
+}
+
+/* 1. Base Table Container & Structure */
+.wp-block-table {
+  @apply overflow-hidden;
+}
+
+.entry-content table {
+  @apply bg-white px-2 border-2 border-primary border-separate border-spacing-0 rounded-2xl;
+}
+
+.wp-block-table thead tr th,
+.entry-content thead tr th {
+  @apply border-0 border-b-2 border-primary text-left font-display text-lg font-semibold text-secondary;
+}
+
+/* 2. Table Headers */
+/* .wp-block-table tr:not(last-child),
+.entry-content tr:not(last-child) {
+  @apply border-b-2 border-primary;
+} */
+
+/* 3. Table Cells & Dividing Lines */
+.wp-block-table td,
+.entry-content td,
+.wp-block-table th,
+.entry-content th {
+  @apply border-0 px-4 py-3 text-sm text-secondary rounded-none!;
+}
+
+/* 5. Remove bottom border from last row */
+.wp-block-table tbody tr:not(:last-child) td,
+.entry-content tbody tr:not(:last-child) td,
+.wp-block-table thead {
+  @apply border-b-2 border-primary;
+}
+
+.wp-block-table tfoot td {
+  @apply border-t-2 border-primary font-black;
+}
 /* --------------------------------------------------------------------------
    1. Standard Post Image Alignments & Captions (Legacy & Block)
    -------------------------------------------------------------------------- */
@@ -108,7 +141,8 @@ img.alignnone,
 .wp-caption,
 .wp-block-image figcaption,
 .wp-block-embed figcaption,
-.wp-block-gallery figcaption {
+.wp-block-gallery figcaption,
+.wp-block-table figcaption {
   @apply mx-auto table;
 
   @apply bg-primary text-white font-display rounded-2xl mt-3 px-2 pb-0.5 text-sm lowercase;
@@ -142,7 +176,7 @@ img.alignnone,
 
 /* Blockquote */
 .wp-block-quote {
-  @apply pl-6 border-l-2 border-primary my-8 text-white/90;
+  @apply pl-6 border-l-2 border-primary text-white/90 flex flex-col gap-10;
 }
 
 .wp-block-quote.is-style-large {
@@ -165,7 +199,7 @@ img.alignnone,
 /* Code & Preformatted */
 .wp-block-code,
 pre.wp-block-preformatted {
-  @apply bg-secondary border border-white/10 rounded-2xl p-4 my-6 text-xs font-mono text-white overflow-x-auto;
+  @apply bg-primary border border-white/10 rounded-2xl p-4 text-xs font-mono text-white overflow-x-auto;
 }
 
 /* Separator / Divider */
@@ -200,11 +234,20 @@ pre.wp-block-preformatted {
    -------------------------------------------------------------------------- */
 
 .wp-block-buttons {
-  @apply flex flex-wrap gap-4 my-6 items-center;
+  @apply flex flex-wrap gap-4 items-center;
 }
 
 .wp-block-button__link {
-  @apply inline-flex items-center justify-center text-xs font-semibold py-3 px-6 rounded-xl bg-primary hover:brightness-110 text-white transition-all shadow-md shadow-primary/20 cursor-pointer;
+  @apply text-white bg-primary px-5 py-3 rounded-4xl mx-auto font-sans text-xl cursor-pointer hover:opacity-80;
+}
+
+.wp-block-button__link::after {
+  content: '\2192';
+  @apply ml-2;
+}
+
+.wp-block-button a[target="_blank"]::after {
+  @apply ml-2 bg-white!;
 }
 
 /* Outline Style */

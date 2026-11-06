@@ -25,5 +25,5 @@
 
         <!-- Foreground Content Wrapper -->
         <div
-            class="relative z-10 w-full h-full pb-24 transition-opacity px-4 flex justify-center"
+            class="relative z-10 w-full h-full transition-opacity px-4 flex justify-center"
             :class="$store.page.isLoading ? 'opacity-0!' : 'opacity-100!'">

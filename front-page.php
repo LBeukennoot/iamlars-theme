@@ -55,7 +55,7 @@ $gallery_data = array_map(function ($post) {
         <h1 class="text-secondary font-display font-bold text-6xl text-center!" x-text="activePost.title"></h1>
         <h2 class="text-secondary font-sans! font-extralight! text-3xl! text-center!" x-text="activePost.excerpt"></h2>
         <button
-            class="text-white bg-primary px-5 py-3 rounded-4xl mx-auto font-sans text-xl cursor-pointer"
+            class="text-white bg-primary px-5 py-3 rounded-4xl mx-auto font-sans text-xl cursor-pointer hover:opacity-80"
             :href="activePost.permalink"
             @pointerdown.stop
             @click.prevent="$store.page.navigateTo(activePost.permalink)">read &rarr;</button>
