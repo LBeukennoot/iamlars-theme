@@ -1,0 +1,56 @@
+name: Build and Create Theme Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'yarn'
+
+      - name: Install dependencies & Compile Theme Assets
+        run: |
+          yarn install --frozen-lockfile --ignore-engines
+          yarn build
+
+      - name: Bundle Production Theme ZIP
+        run: |
+          # 1. Clean previous build and create root theme container
+          rm -rf package
+          mkdir -p package/iamlars-theme
+
+          # 2. Copy compiled assets and runtime PHP files
+          cp -r dist package/iamlars-theme/
+          cp -r template-parts package/iamlars-theme/
+          cp -r vendor package/iamlars-theme/
+
+          # 3. Copy top-level theme files (PHP templates, style.css, screenshot.png)
+          cp *.php package/iamlars-theme/ 2>/dev/null || true
+          cp style.css package/iamlars-theme/
+          cp screenshot.png package/iamlars-theme/ 2>/dev/null || true
+
+          # 4. Create release ZIP
+          cd package
+          zip -r ../iamlars-theme.zip iamlars-theme/
+          cd ..
+
+      - name: Create GitHub Release with Theme Asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: iamlars-theme.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

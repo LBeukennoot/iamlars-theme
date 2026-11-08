@@ -1,5 +1,38 @@
 <?php
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+// 1. Always use absolute paths with __DIR__ to prevent path resolution crashes
+$puc_file = __DIR__ . '/vendor/plugin-update-checker/plugin-update-checker.php';
+
+if (file_exists($puc_file)) {
+    require_once $puc_file;
+
+    // 2. Build the update checker
+    $myUpdateChecker = \YahnisElsts\PluginUpdateChecker\v6\PucFactory::buildUpdateChecker(
+        'https://github.com/LBeukennoot/iamlars-theme/',
+        __FILE__,
+        'iamlars-theme'
+    );
+
+    // Set the stable branch
+    $myUpdateChecker->setBranch('main');
+
+    // 3. Type-hint to satisfy the IDE and guard against null VCS API
+    /** @var \YahnisElsts\PluginUpdateChecker\v6\Vcs\GitHubApi|null $vcsApi */
+    $vcsApi = method_exists($myUpdateChecker, 'getVcsApi') ? $myUpdateChecker->getVcsApi() : null;
+
+    if ($vcsApi && method_exists($vcsApi, 'enableReleaseAssets')) {
+        $vcsApi->enableReleaseAssets();
+
+        // 4. Authenticate private repository (Required for private GitHub repos)
+        // Pass your GitHub Personal Access Token (classic) with 'repo' scope
+        // $vcsApi->setAuthentication('YOUR_GITHUB_PERSONAL_ACCESS_TOKEN');
+    }
+}
+
 define('VITE_SERVER', 'http://localhost:5173');
 
 /**
