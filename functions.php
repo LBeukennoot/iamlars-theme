@@ -4,32 +4,30 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// 1. Always use absolute paths with __DIR__ to prevent path resolution crashes
-$puc_file = __DIR__ . '/vendor/plugin-update-checker/plugin-update-checker.php';
+// 1. Initialize Plugin Update Checker (v6) for Themes
+$puc_file = get_template_directory() . '/vendor/plugin-update-checker/plugin-update-checker.php';
 
 if (file_exists($puc_file)) {
     require_once $puc_file;
 
-    // 2. Build the update checker
-    $myUpdateChecker = \YahnisElsts\PluginUpdateChecker\v6\PucFactory::buildUpdateChecker(
-        'https://github.com/LBeukennoot/iamlars-theme/',
-        __FILE__,
-        'iamlars-theme'
-    );
+    if (class_exists('\YahnisElsts\PluginUpdateChecker\v6\PucFactory')) {
+        $myUpdateChecker = \YahnisElsts\PluginUpdateChecker\v6\PucFactory::buildUpdateChecker(
+            'https://github.com/LBeukennoot/iamlars-theme/',
+            get_template_directory(), // Note: Use directory path for themes, not __FILE__
+            'iamlars-theme'
+        );
 
-    // Set the stable branch
-    $myUpdateChecker->setBranch('main');
+        $myUpdateChecker->setBranch('main');
 
-    // 3. Type-hint to satisfy the IDE and guard against null VCS API
-    /** @var \YahnisElsts\PluginUpdateChecker\v6\Vcs\GitHubApi|null $vcsApi */
-    $vcsApi = method_exists($myUpdateChecker, 'getVcsApi') ? $myUpdateChecker->getVcsApi() : null;
+        /** @var \YahnisElsts\PluginUpdateChecker\v6\Vcs\GitHubApi|null $vcsApi */
+        $vcsApi = method_exists($myUpdateChecker, 'getVcsApi') ? $myUpdateChecker->getVcsApi() : null;
 
-    if ($vcsApi && method_exists($vcsApi, 'enableReleaseAssets')) {
-        $vcsApi->enableReleaseAssets();
-
-        // 4. Authenticate private repository (Required for private GitHub repos)
-        // Pass your GitHub Personal Access Token (classic) with 'repo' scope
-        // $vcsApi->setAuthentication('YOUR_GITHUB_PERSONAL_ACCESS_TOKEN');
+        if ($vcsApi && method_exists($vcsApi, 'enableReleaseAssets')) {
+            $vcsApi->enableReleaseAssets();
+            if (defined('IAMLARS_GITHUB_TOKEN')) {
+                $vcsApi->setAuthentication(IAMLARS_GITHUB_TOKEN);
+            }
+        }
     }
 }
 
@@ -49,9 +47,7 @@ function is_vite_dev(): bool {
         return $is_dev = false;
     }
 
-    // Try Docker host gateway first, then localhost fallback
     $hosts = ['host.docker.internal', 'localhost', '127.0.0.1'];
-
     foreach ($hosts as $host) {
         $connection = @fsockopen($host, 5173, $errno, $errstr, 0.05);
         if (is_resource($connection)) {
@@ -64,9 +60,9 @@ function is_vite_dev(): bool {
 }
 
 /**
- * Manifest helper for production builds.
+ * Get manifest array.
  */
-function theme_asset(string $entry): string {
+function get_theme_manifest(): array {
     static $manifest = null;
 
     if ($manifest === null) {
@@ -81,17 +77,42 @@ function theme_asset(string $entry): string {
                 break;
             }
         }
+        if ($manifest === null) {
+            $manifest = [];
+        }
     }
 
-    if (isset($manifest[$entry]['file'])) {
-        return 'dist/' . $manifest[$entry]['file'];
+    return $manifest;
+}
+
+/**
+ * Manifest helper for JS and CSS files.
+ */
+function theme_asset(string $entry, string $type = 'file'): string {
+    $manifest = get_theme_manifest();
+
+    // 1. Direct match in manifest
+    if (isset($manifest[$entry][$type])) {
+        return 'dist/' . $manifest[$entry][$type];
+    }
+
+    // 2. If looking for CSS that was imported inside a JS entrypoint (e.g. import './main.css' inside src/main.js)
+    if ($type === 'css' && isset($manifest[$entry]['css'][0])) {
+        return 'dist/' . $manifest[$entry]['css'][0];
+    }
+
+    // 3. Fallback: Search dist directory if manifest is missing or non-hashed names were used
+    $filename = basename($entry);
+    $matches = glob(get_template_directory() . '/dist/assets/' . pathinfo($filename, PATHINFO_FILENAME) . '*.' . pathinfo($filename, PATHINFO_EXTENSION));
+    if (!empty($matches)) {
+        return 'dist/assets/' . basename($matches[0]);
     }
 
     return '';
 }
 
 /**
- * Enqueue frontend scripts and styles (Dev vs. Prod).
+ * Enqueue frontend scripts and styles.
  */
 add_action('wp_enqueue_scripts', function () {
     if (is_vite_dev()) {
@@ -100,19 +121,30 @@ add_action('wp_enqueue_scripts', function () {
         wp_enqueue_script('theme-main', VITE_SERVER . '/src/main.js', ['vite-client'], null, false);
     } else {
         // --- PROD ENVIRONMENT (dist/ files) ---
+        // 1. Enqueue JS
         $main_js = theme_asset('src/main.js');
-        if ($main_js) {
-            wp_enqueue_script('theme-main', get_template_directory_uri() . '/' . $main_js, [], null, true);
+        if ($main_js && file_exists(get_template_directory() . '/' . $main_js)) {
+            wp_enqueue_script(
+                'theme-main',
+                get_template_directory_uri() . '/' . $main_js,
+                [],
+                filemtime(get_template_directory() . '/' . $main_js),
+                true
+            );
         }
 
-        // Check if Vite generated a linked main.css
-        $main_css = theme_asset('src/main.css') ?: theme_asset('src/input.css');
-        if (!$main_css && file_exists(get_template_directory() . '/dist/assets/main.css')) {
-            $main_css = 'dist/assets/main.css';
-        }
+        // 2. Enqueue CSS (checks src/main.css entry, CSS emitted by src/main.js, and physical dist fallback)
+        $main_css = theme_asset('src/main.css') 
+            ?: theme_asset('src/main.js', 'css')
+            ?: theme_asset('main.css');
 
-        if ($main_css) {
-            wp_enqueue_style('theme-main', get_template_directory_uri() . '/' . $main_css, [], null);
+        if ($main_css && file_exists(get_template_directory() . '/' . $main_css)) {
+            wp_enqueue_style(
+                'theme-main',
+                get_template_directory_uri() . '/' . $main_css,
+                [],
+                filemtime(get_template_directory() . '/' . $main_css)
+            );
         }
     }
 });
@@ -134,9 +166,9 @@ add_action('after_setup_theme', function () {
     add_theme_support('post-thumbnails');
     add_theme_support('editor-styles');
 
-    // In prod or dev, point to the built editor CSS
-    $editor_css = 'dist/assets/editor-style.css';
-    if (file_exists(get_template_directory() . '/' . $editor_css)) {
+    // Resolve editor CSS via manifest or fallback
+    $editor_css = theme_asset('src/editor-style.css') ?: theme_asset('editor-style.css');
+    if ($editor_css && file_exists(get_template_directory() . '/' . $editor_css)) {
         add_editor_style($editor_css);
     }
 });
@@ -146,7 +178,6 @@ add_action('after_setup_theme', function () {
  */
 add_action('enqueue_block_editor_assets', function () {
     if (is_vite_dev()) {
-        // In dev, load editor CSS via Vite for instant updates
         wp_enqueue_style(
             'theme-editor-dev',
             VITE_SERVER . '/src/editor-style.css',
