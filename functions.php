@@ -144,3 +144,95 @@ add_action('after_setup_theme', function () {
         add_editor_style($editor_css);
     }
 });
+
+// Add a manual update trigger link to the theme info modal in wp-admin/themes.php
+add_filter('theme_row_meta', function ($meta, $theme_key, $theme, $status) {
+    if ($theme_key === 'iamlars-theme' && current_user_can('update_themes')) {
+        $check_url = wp_nonce_url(
+            admin_url('themes.php?action=check-theme-update&theme=iamlars-theme'),
+            'check_theme_update'
+        );
+        $meta[] = sprintf('<a href="%s" style="color: #2271b1;">Check for updates</a>', esc_url($check_url));
+    }
+    return $meta;
+}, 10, 4);
+
+// Handle the manual check trigger
+add_action('admin_init', function () {
+    if (
+        isset($_GET['action'], $_GET['theme']) &&
+        $_GET['action'] === 'check-theme-update' &&
+        $_GET['theme'] === 'iamlars-theme'
+    ) {
+        check_admin_referer('check_theme_update');
+
+        global $myUpdateChecker;
+        if (isset($myUpdateChecker)) {
+            $myUpdateChecker->checkForUpdates();
+        }
+
+        wp_safe_redirect(admin_url('themes.php'));
+        exit;
+    }
+});
+
+add_action('after_setup_theme', function () {
+    register_nav_menus([
+        'primary_menu' => __('Primary Navigation', 'iamlars-theme'),
+        'socials_menu' => __('Socials Navigation', 'iamlars-theme'),
+    ]);
+});
+
+/**
+ * Render inline SVG from src/assets/icons/.
+ *
+ * @param string $icon_name Filename without extension (e.g. 'github')
+ * @param string $class Tailwind classes to inject into the <svg> element
+ * @return string Inline SVG markup or empty string
+ */
+function iamlars_get_icon_svg(string $icon_name, string $class = 'w-5 h-5 fill-current'): string {
+    $file_path = get_template_directory() . "/src/assets/icons/{$icon_name}.svg";
+
+    if (!file_exists($file_path)) {
+        return '';
+    }
+
+    $svg = file_get_contents($file_path);
+
+    // Inject custom Tailwind classes into the root <svg> tag
+    if (!empty($class)) {
+        if (str_contains($svg, 'class="')) {
+            $svg = preg_replace('/class="([^"]*)"/', 'class="$1 ' . esc_attr($class) . '"', $svg, 1);
+        } else {
+            $svg = preg_replace('/<svg /', '<svg class="' . esc_attr($class) . '" ', $svg, 1);
+        }
+    }
+
+    return $svg;
+}
+
+/**
+ * Determine which SVG icon filename to use based on URL or title.
+ */
+function iamlars_match_social_icon(string $url, string $title = ''): string {
+    $url_lower = strtolower($url);
+    $title_lower = strtolower($title);
+
+    if (str_contains($url_lower, 'github') || str_contains($title_lower, 'github')) {
+        return 'github';
+    }
+    if (str_contains($url_lower, 'linkedin') || str_contains($title_lower, 'linkedin')) {
+        return 'linkedin';
+    }
+    if (str_contains($url_lower, 'mailto:') || str_contains($title_lower, 'mail') || str_contains($title_lower, 'contact')) {
+        return 'mail';
+    }
+    if (str_contains($url_lower, 'about-me') || str_contains($title_lower, 'about me')) {
+        return 'person';
+    }
+    if (str_contains($url_lower, 'home') || str_contains($title_lower, 'home')) {
+        return 'home';
+    }
+
+    return 'link'; // Fallback icon name: src/assets/icons/link.svg
+}

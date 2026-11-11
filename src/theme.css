@@ -16,6 +16,14 @@
 
   --shadow-xl: 0 0 30px rgba(0, 0, 0, 0.2);
 
+  --drop-shadow-xs: 0 0 1px rgb(0 0 0 / 0.05);
+  --drop-shadow-sm: 0 0 2px rgb(0 0 0 / 0.35);
+  --drop-shadow-md: 0 0 6px rgb(0 0 0 / 0.35);
+  --drop-shadow-lg: 0 0 15px rgb(0 0 0 / 0.35);
+  --drop-shadow-xl: 0 0 25px rgb(0 0 0 / 0.35);
+  --drop-shadow-2xl: 0 0 50px rgb(0 0 0 / 0.55);
+  --drop-shadow-none: 0 0 #0000;
+
   --font-display: 'Corben', serif;
   --font-sans: 'Lexend', sans-serif;
 }

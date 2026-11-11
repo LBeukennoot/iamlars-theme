@@ -4,16 +4,18 @@
     @click="handleCardClick(index)">
 
     <div class="w-auto h-2/3 m-2 bg-cover bg-center bg-no-repeat rounded-2xl"
-        :style="`background-image: url('${post.image}')`"></div>
-    <div class="absolute bottom-0 m-5">
-        <div class="flex flex-wrap gap-1.5 z-10 pointer-events-none">
+        :style="`background-image: url('${post.image}')`">
+        <div class="flex ml-3 h-full items-end flex-wrap gap-1.5 z-10 pointer-events-none">
             <template x-for="cat in post.categories" :key="cat.id">
-                <?php get_template_part('/template-parts/components/tag') ?>
+                <div class="translate-y-1/2"><?php get_template_part('/template-parts/components/tag') ?></div>
                 <!-- <span
                     x-text="cat.name"
                     class="px-2.5 py-1 text-[11px] font-medium tracking-wide text-white/90 bg-slate-900/70 backdrop-blur-md border border-white/10 rounded-full shadow-sm"></span> -->
             </template>
         </div>
+    </div>
+    <div class="absolute bottom-0 m-5">
+
         <h1 class="font-display text-white! text-5xl! lowercase" x-text="post.title"></h1>
     </div>
     <!-- <img

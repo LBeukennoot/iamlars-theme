@@ -36,24 +36,24 @@ $gallery_data = array_map(function ($post) {
     id="ring-gallery-root"
     x-data="ringGallery(<?php echo esc_attr(json_encode($gallery_data)); ?>)"
     x-cloak
-    class="relative w-full h-screen flex flex-col items-center justify-around select-none cursor-grab active:cursor-grabbing overflow-visible pb-8 "
+    class="relative w-full h-screen flex flex-col items-center justify-around select-none cursor-grab active:cursor-grabbing overflow-visible pt-20 pb-8 "
 
     @pointerdown="onPointerDown($event)"
     @pointermove.window="onPointerMove($event)"
     @pointerup.window="onPointerUp()"
     @pointercancel.window="onPointerUp()">
 
-    <div class="relative w-75 h-100">
+    <div class="relative w-60 sm:w-75 h-85 sm:h-100">
         <template x-for="(post, index) in posts" :key="post.id">
             <?php get_template_part('template-parts/components/card'); ?>
         </template>
     </div>
 
     <div
-        class="flex flex-col gap-5 lowercase transition-opacity duration-500"
+        class="flex flex-col gap-3 lowercase transition-opacity duration-500 h-56 sm:h-64 shrink-0 max-w-2xl"
         :class="(Math.abs(velocity) > 0.05) ? 'opacity-0 duration-0!' : 'opacity-100'">
-        <h1 class="text-secondary font-display font-bold text-6xl text-center!" x-text="activePost.title"></h1>
-        <h2 class="text-secondary font-sans! font-extralight! text-3xl! text-center!" x-text="activePost.excerpt"></h2>
+        <h1 class="text-secondary font-display font-bold text-4xl! sm:text-6xl! text-center! line-clamp-1 pb-1.5 sm:pb-5" x-text="activePost.title"></h1>
+        <h2 class="text-secondary font-sans! font-extralight! text-2xl! sm:text-3xl! text-center! line-clamp-2 leading-snug" x-text="activePost.excerpt"></h2>
         <button
             class="text-white bg-primary px-5 py-3 rounded-4xl mx-auto font-sans text-xl cursor-pointer hover:opacity-80"
             :href="activePost.permalink"
