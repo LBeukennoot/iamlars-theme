@@ -13,7 +13,7 @@ if (file_exists($puc_file)) {
     if (class_exists('\YahnisElsts\PluginUpdateChecker\v6\PucFactory')) {
         $myUpdateChecker = \YahnisElsts\PluginUpdateChecker\v6\PucFactory::buildUpdateChecker(
             'https://github.com/LBeukennoot/iamlars-theme/',
-            get_template_directory(), // Note: Use directory path for themes, not __FILE__
+            get_template_directory(),
             'iamlars-theme'
         );
 
@@ -31,38 +31,11 @@ if (file_exists($puc_file)) {
     }
 }
 
-define('VITE_SERVER', 'http://localhost:5173');
-
-/**
- * Check if the Vite dev server is running.
- */
-function is_vite_dev(): bool {
-    static $is_dev = null;
-
-    if ($is_dev !== null) {
-        return $is_dev;
-    }
-
-    if (defined('THEME_DEV') && !THEME_DEV) {
-        return $is_dev = false;
-    }
-
-    $hosts = ['host.docker.internal', 'localhost', '127.0.0.1'];
-    foreach ($hosts as $host) {
-        $connection = @fsockopen($host, 5173, $errno, $errstr, 0.05);
-        if (is_resource($connection)) {
-            fclose($connection);
-            return $is_dev = true;
-        }
-    }
-
-    return $is_dev = false;
-}
-
 /**
  * Get manifest array.
  */
-function get_theme_manifest(): array {
+function get_theme_manifest(): array
+{
     static $manifest = null;
 
     if ($manifest === null) {
@@ -88,72 +61,72 @@ function get_theme_manifest(): array {
 /**
  * Manifest helper for JS and CSS files.
  */
-function theme_asset(string $entry, string $type = 'file'): string {
+function theme_asset(string $entry, string $type = 'file'): string
+{
     $manifest = get_theme_manifest();
 
-    // 1. Direct match in manifest
+    // 1. Match in manifest
     if (isset($manifest[$entry][$type])) {
         return 'dist/' . $manifest[$entry][$type];
     }
 
-    // 2. If looking for CSS that was imported inside a JS entrypoint (e.g. import './main.css' inside src/main.js)
+    // 2. CSS imported inside JS (e.g. import './main.css' inside src/main.js)
     if ($type === 'css' && isset($manifest[$entry]['css'][0])) {
         return 'dist/' . $manifest[$entry]['css'][0];
     }
 
-    // 3. Fallback: Search dist directory if manifest is missing or non-hashed names were used
+    // 3. Direct dist fallback (handles unhashed or explicit asset names)
     $filename = basename($entry);
-    $matches = glob(get_template_directory() . '/dist/assets/' . pathinfo($filename, PATHINFO_FILENAME) . '*.' . pathinfo($filename, PATHINFO_EXTENSION));
-    if (!empty($matches)) {
-        return 'dist/assets/' . basename($matches[0]);
+    $target = get_template_directory() . '/dist/assets/' . $filename;
+    if (file_exists($target)) {
+        return 'dist/assets/' . $filename;
     }
 
     return '';
 }
 
 /**
- * Enqueue frontend scripts and styles.
+ * Enqueue frontend scripts and styles from dist/.
  */
 add_action('wp_enqueue_scripts', function () {
-    if (is_vite_dev()) {
-        // --- DEV ENVIRONMENT (Vite HMR) ---
-        wp_enqueue_script('vite-client', VITE_SERVER . '/@vite/client', [], null, false);
-        wp_enqueue_script('theme-main', VITE_SERVER . '/src/main.js', ['vite-client'], null, false);
-    } else {
-        // --- PROD ENVIRONMENT (dist/ files) ---
-        // 1. Enqueue JS
-        $main_js = theme_asset('src/main.js');
-        if ($main_js && file_exists(get_template_directory() . '/' . $main_js)) {
-            wp_enqueue_script(
-                'theme-main',
-                get_template_directory_uri() . '/' . $main_js,
-                [],
-                filemtime(get_template_directory() . '/' . $main_js),
-                true
-            );
-        }
+    $theme_dir = get_template_directory();
+    $theme_uri = get_template_directory_uri();
 
-        // 2. Enqueue CSS (checks src/main.css entry, CSS emitted by src/main.js, and physical dist fallback)
-        $main_css = theme_asset('src/main.css') 
-            ?: theme_asset('src/main.js', 'css')
-            ?: theme_asset('main.css');
+    // 1. Main JavaScript
+    $main_js = theme_asset('src/main.js')
+        ?: theme_asset('main.js')
+        ?: (file_exists($theme_dir . '/dist/assets/main.js') ? 'dist/assets/main.js' : '');
 
-        if ($main_css && file_exists(get_template_directory() . '/' . $main_css)) {
-            wp_enqueue_style(
-                'theme-main',
-                get_template_directory_uri() . '/' . $main_css,
-                [],
-                filemtime(get_template_directory() . '/' . $main_css)
-            );
-        }
+    if ($main_js && file_exists($theme_dir . '/' . $main_js)) {
+        wp_enqueue_script(
+            'theme-main',
+            $theme_uri . '/' . $main_js,
+            [],
+            filemtime($theme_dir . '/' . $main_js),
+            true
+        );
+    }
+
+    // 2. Main Stylesheet
+    $main_css = theme_asset('src/main.css')
+        ?: theme_asset('src/main.js', 'css')
+        ?: theme_asset('main.css');
+
+    if ($main_css && file_exists($theme_dir . '/' . $main_css)) {
+        wp_enqueue_style(
+            'theme-main',
+            $theme_uri . '/' . $main_css,
+            [],
+            filemtime($theme_dir . '/' . $main_css)
+        );
     }
 });
 
 /**
- * Add type="module" to Vite scripts.
+ * Add type="module" to theme scripts.
  */
 add_filter('script_loader_tag', function ($tag, $handle) {
-    if (in_array($handle, ['vite-client', 'theme-main'], true)) {
+    if ($handle === 'theme-main') {
         return str_replace('<script ', '<script type="module" ', $tag);
     }
     return $tag;
@@ -166,23 +139,8 @@ add_action('after_setup_theme', function () {
     add_theme_support('post-thumbnails');
     add_theme_support('editor-styles');
 
-    // Resolve editor CSS via manifest or fallback
     $editor_css = theme_asset('src/editor-style.css') ?: theme_asset('editor-style.css');
     if ($editor_css && file_exists(get_template_directory() . '/' . $editor_css)) {
         add_editor_style($editor_css);
-    }
-});
-
-/**
- * Enqueue editor style directly in Gutenberg when in Dev mode.
- */
-add_action('enqueue_block_editor_assets', function () {
-    if (is_vite_dev()) {
-        wp_enqueue_style(
-            'theme-editor-dev',
-            VITE_SERVER . '/src/editor-style.css',
-            [],
-            null
-        );
     }
 });

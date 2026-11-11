@@ -1,7 +1,9 @@
 import './main.css';
 import Alpine from 'alpinejs';
 
-Alpine.store('page', {
+window.Alpine = window.Alpine || Alpine;
+
+window.Alpine.store('page', {
   isLoading: false,
   scroll: 0,
   maxScroll: 0,
@@ -37,7 +39,7 @@ Alpine.store('page', {
   }
 });
 
-Alpine.data('ringGallery', (posts = []) => ({
+window.Alpine.data('ringGallery', (posts = []) => ({
   posts,
   rotation: 0,
   isDragging: false,
@@ -244,5 +246,9 @@ Alpine.data('ringGallery', (posts = []) => ({
   }
 }));
 
-window.Alpine = Alpine;
-Alpine.start();
+document.addEventListener('DOMContentLoaded', () => {
+  if (!window.__alpineStarted) {
+    window.__alpineStarted = true;
+    window.Alpine.start();
+  }
+});
