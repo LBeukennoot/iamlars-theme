@@ -14,14 +14,20 @@
 
   --blur-4xl: 10rem;
 
-  --shadow-xl: 0 0 30px rgba(0, 0, 0, 0.2);
+  --shadow-xs: 0 0 1px rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 0 2px rgb(0 0 0 / 0.25);
+  --shadow-md: 0 0 6px rgb(0 0 0 / 0.25);
+  --shadow-lg: 0 0 15px rgb(0 0 0 / 0.25);
+  --shadow-xl: 0 0 25px rgb(0 0 0 / 0.25);
+  --shadow-2xl: 0 0 50px rgb(0 0 0 / 0.45);
+  --shadow-none: 0 0 #0000;
 
   --drop-shadow-xs: 0 0 1px rgb(0 0 0 / 0.05);
-  --drop-shadow-sm: 0 0 2px rgb(0 0 0 / 0.35);
-  --drop-shadow-md: 0 0 6px rgb(0 0 0 / 0.35);
-  --drop-shadow-lg: 0 0 15px rgb(0 0 0 / 0.35);
-  --drop-shadow-xl: 0 0 25px rgb(0 0 0 / 0.35);
-  --drop-shadow-2xl: 0 0 50px rgb(0 0 0 / 0.55);
+  --drop-shadow-sm: 0 0 2px rgb(0 0 0 / 0.25);
+  --drop-shadow-md: 0 0 6px rgb(0 0 0 / 0.25);
+  --drop-shadow-lg: 0 0 15px rgb(0 0 0 / 0.25);
+  --drop-shadow-xl: 0 0 25px rgb(0 0 0 / 0.25);
+  --drop-shadow-2xl: 0 0 50px rgb(0 0 0 / 0.45);
   --drop-shadow-none: 0 0 #0000;
 
   --font-display: 'Corben', serif;
@@ -30,4 +36,8 @@
 
 @utility shadow-vignette-heavy {
   box-shadow: inset 0 0 100px 25px var(--color-primary);
+}
+
+@utility tag {
+  @apply inline-flex items-center font-display rounded-full px-2 pb-1 pt-0.5 text-sm! lowercase leading-tight! no-underline!
 }
