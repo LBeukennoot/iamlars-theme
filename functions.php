@@ -236,3 +236,21 @@ function iamlars_match_social_icon(string $url, string $title = ''): string {
 
     return 'link'; // Fallback icon name: src/assets/icons/link.svg
 }
+
+add_action('init', function () {
+    $post_type_object = get_post_type_object('post');
+    if ($post_type_object) {
+        $post_type_object->template = [
+            ['core/post-excerpt', ['moreText' => 'ignore this', 'excerptLength' => 50]],
+            ['core/post-terms', ['term' => 'post_tag']],
+            // ['iamlars/single-image'], // One of your custom blocks
+            // ['core/paragraph', ['placeholder' => 'Start writing your story...']],
+        ];
+        
+        // Optional: Lock the layout so blocks can't be deleted or moved
+        // 'all' = cannot add, remove, or move blocks
+        // 'insert' = can move existing blocks, cannot add/remove
+        // false = completely unlocked (just pre-populated)
+        $post_type_object->template_lock = false; 
+    }
+});

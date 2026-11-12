@@ -1,1 +1,1 @@
-<span class="bg-white text-secondary font-display rounded-4xl px-2 pb-0.5 text-sm lowercase" x-text="cat.name"></span>
+<span class="bg-white text-secondary font-display rounded-full px-2 pb-0.5 text-sm! lowercase" x-text="cat.name"></span>

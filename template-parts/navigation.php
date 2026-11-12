@@ -8,7 +8,7 @@ $socials_menu_id = $locations['socials_menu'] ?? null;
 $social_items    = $socials_menu_id ? wp_get_nav_menu_items($socials_menu_id) : [];
 ?>
 
-<div class="absolute left-1/2 -translate-x-1/2 flex gap-2 z-50 mt-2 [&>div]:flex [&>div]:gap-5 [&>div]:px-5 [&>div]:py-3 [&>div]:rounded-full [&>div]:bg-white items-center drop-shadow-2xl">
+<div class="fixed left-1/2 -translate-x-1/2 flex gap-2 z-50 mt-2 [&>div]:flex [&>div]:gap-5 [&>div]:px-5 [&>div]:py-3 [&>div]:rounded-full [&>div]:bg-white items-center drop-shadow-2xl">
     <!-- 1. Primary Menu & Expanding Search -->
     <div class="items-center">
         <!-- Dynamic Primary Menu Links (e.g. About Me) -->
@@ -18,9 +18,9 @@ $social_items    = $socials_menu_id ? wp_get_nav_menu_items($socials_menu_id) : 
                     href="<?= esc_url($item->url); ?>" 
                     title="<?= esc_attr($item->title); ?>"
                     aria-label="<?= esc_attr($item->title); ?>"
-                    class="text-secondary hover:text-primary transition-colors flex items-center justify-center"
+                    class="text-secondary hover:text-primary transition-colors flex items-center justify-center active:scale-90"
                 >
-                    <?= $item->title !== "about me" ? esc_html($item->title) : iamlars_get_icon_svg(iamlars_match_social_icon($item->url, $item->title), 'w-8 h-8 stroke-secondary') ?>
+                    <?= $item->title !== "about me" ? esc_html($item->title) : iamlars_get_icon_svg(iamlars_match_social_icon($item->url, $item->title), 'w-5 h-5 sm:w-8 sm:h-8 stroke-secondary') ?>
                 </a>
             <?php endforeach; ?>
         <?php endif; ?>
@@ -38,9 +38,9 @@ $social_items    = $socials_menu_id ? wp_get_nav_menu_items($socials_menu_id) : 
                     type="button" 
                     @click="open = !open; if(open) { $nextTick(() => $refs.searchInput.focus()) }"
                     aria-label="Toggle search"
-                    class="text-primary hover:text-primary transition-colors focus:outline-none flex items-center cursor-pointer"
+                    class="text-primary hover:text-primary transition-colors focus:outline-none flex items-center cursor-pointer active:scale-90"
                 >
-                    <?= iamlars_get_icon_svg('search', 'w-8 h-8 stroke-current'); ?>
+                    <?= iamlars_get_icon_svg('search', 'w-5 h-5 sm:w-8 sm:h-8 stroke-current'); ?>
                 </button>
 
                 <!-- Input field that expands to the right -->
@@ -80,9 +80,9 @@ $social_items    = $socials_menu_id ? wp_get_nav_menu_items($socials_menu_id) : 
                     rel="noopener noreferrer" 
                     title="<?= esc_attr($item->title); ?>"
                     aria-label="<?= esc_attr($item->title); ?>"
-                    class="text-secondary hover:text-primary transition-colors flex items-center justify-center"
+                    class="text-secondary hover:text-primary transition-colors flex items-center justify-center active:scale-90"
                 >
-                    <?= iamlars_get_icon_svg($icon_slug, 'w-8 h-8 stroke-current'); ?>
+                    <?= iamlars_get_icon_svg($icon_slug, 'w-5 h-5 sm:w-8 sm:h-8 stroke-current'); ?>
                 </a>
             <?php endforeach; ?>
         <?php else : ?>

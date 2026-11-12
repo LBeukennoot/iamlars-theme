@@ -51,20 +51,49 @@ a {
   @apply underline;
 }
 
-.wp-block-paragraph a[target="_blank"]::after, 
-li a[target="_blank"]::after,
-td a[target="_blank"]::after,
-.wp-block-button a[target="_blank"]::after {
-	width: 13px;
-	height: 13px;
-	display: inline-block;
-	content: '';
-	-webkit-mask: url('./assets/icons/external-link.svg') no-repeat 50% 50%;
-	mask: url('./assets/icons/external-link.svg') no-repeat 50% 50%;
-	-webkit-mask-size: cover;
-	mask-size: cover;
-	background-color: var(--color-secondary);
-	margin: 0 0.3rem 0 0.2rem;
+hr,
+.wp-block-separator {
+  @apply border-0 border-solid! border-t border-primary! bg-transparent! rounded-full;
+}
+
+.wp-block-post-excerpt__more-text {
+  @apply hidden;
+}
+
+.wp-block-post-excerpt p {
+  @apply text-secondary font-sans! font-extralight! text-4xl! lowercase! text-center!;
+}
+
+.wp-block-post-terms {
+  @apply flex flex-wrap gap-2 justify-center;
+}
+
+.wp-block-post-terms span {
+  @apply hidden;
+}
+
+.wp-block-post-terms a {
+  @apply bg-primary text-white! no-underline text-sm! px-2 pb-0.5 rounded-full font-display!;
+}
+
+/* --------------------------------------------------------------------------
+   Table
+   -------------------------------------------------------------------------- */
+
+.wp-block-paragraph a[target='_blank']::after,
+li a[target='_blank']::after,
+td a[target='_blank']::after,
+.wp-block-button a[target='_blank']::after {
+  width: 13px;
+  height: 13px;
+  display: inline-block;
+  content: '';
+  -webkit-mask: url('./assets/icons/external-link.svg') no-repeat 50% 50%;
+  mask: url('./assets/icons/external-link.svg') no-repeat 50% 50%;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  background-color: var(--color-secondary);
+  margin: 0 0.3rem 0 0.2rem;
 }
 
 /* 1. Base Table Container & Structure */
@@ -80,12 +109,6 @@ td a[target="_blank"]::after,
 .entry-content thead tr th {
   @apply border-0 border-b-2 border-primary text-left font-display text-lg font-semibold text-secondary;
 }
-
-/* 2. Table Headers */
-/* .wp-block-table tr:not(last-child),
-.entry-content tr:not(last-child) {
-  @apply border-b-2 border-primary;
-} */
 
 /* 3. Table Cells & Dividing Lines */
 .wp-block-table td,
@@ -106,7 +129,7 @@ td a[target="_blank"]::after,
   @apply border-t-2 border-primary font-black;
 }
 /* --------------------------------------------------------------------------
-   1. Standard Post Image Alignments & Captions (Legacy & Block)
+   Image & Captions
    -------------------------------------------------------------------------- */
 
 /* Center Alignment */
@@ -142,7 +165,8 @@ img.alignnone,
 .wp-block-image figcaption,
 .wp-block-embed figcaption,
 .wp-block-gallery figcaption,
-.wp-block-table figcaption {
+.wp-block-table figcaption,
+.wp-block-video figcaption {
   @apply mx-auto table;
 
   @apply bg-primary text-white font-display rounded-2xl mt-3 px-2 pb-0.5 text-sm lowercase;
@@ -153,7 +177,7 @@ img.alignnone,
 }
 
 /* --------------------------------------------------------------------------
-   2. Gutenberg Layout Alignments (Wide & Full Bleed)
+   Layout
    -------------------------------------------------------------------------- */
 
 /* Wide Width (extends past article column) */
@@ -171,7 +195,7 @@ img.alignnone,
 }
 
 /* --------------------------------------------------------------------------
-   3. Common Core Blocks (Typography & Embeds)
+   Common core blocks
    -------------------------------------------------------------------------- */
 
 /* Blockquote */
@@ -226,11 +250,17 @@ pre.wp-block-preformatted {
 }
 
 .wp-block-embed__wrapper iframe {
-  @apply absolute inset-0 w-full h-full;
+  @apply absolute inset-0 w-full h-full rounded-3xl! overflow-hidden!;
+}
+
+.wp-block-embed,
+.wp-block-video,
+.wp-block-video video {
+  @apply shadow-none! rounded-3xl! overflow-hidden!;
 }
 
 /* --------------------------------------------------------------------------
-   4. Native Gutenberg Buttons & Columns
+   Buttons & Columns
    -------------------------------------------------------------------------- */
 
 .wp-block-buttons {
@@ -238,7 +268,7 @@ pre.wp-block-preformatted {
 }
 
 .wp-block-button__link {
-  @apply text-white bg-primary px-5 py-3 rounded-4xl mx-auto font-sans text-xl cursor-pointer hover:opacity-80;
+  @apply text-white bg-primary px-5 py-3 rounded-4xl mx-auto font-sans text-xl cursor-pointer active:scale-90;
 }
 
 .wp-block-button__link::after {
@@ -246,7 +276,7 @@ pre.wp-block-preformatted {
   @apply ml-2;
 }
 
-.wp-block-button a[target="_blank"]::after {
+.wp-block-button a[target='_blank']::after {
   @apply ml-2 bg-white!;
 }
 
@@ -265,7 +295,7 @@ pre.wp-block-preformatted {
 }
 
 /* --------------------------------------------------------------------------
-   5. Standard WordPress Utilities & Accessibility
+   Utilities & Accessibility
    -------------------------------------------------------------------------- */
 
 /* Screen reader only (hidden visually, readable by assistive tech) */
