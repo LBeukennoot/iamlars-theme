@@ -81,7 +81,15 @@ hr,
 }
 
 .wp-block {
-  @apply max-w-2xl
+  @apply max-w-2xl m-0 w-full place-self-start
+}
+
+.wp-block-iamlars-skill-rating {
+  @apply ml-0!
+}
+
+.wp-block-post-content {
+  @apply flex! flex-col! gap-10! mt-10 
 }
 
 /* --------------------------------------------------------------------------

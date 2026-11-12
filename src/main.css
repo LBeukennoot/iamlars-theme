@@ -287,7 +287,7 @@ pre.wp-block-preformatted {
 
 /* Columns */
 .wp-block-columns {
-  @apply flex flex-col md:flex-row gap-6 my-8;
+  /* @apply flex flex-col! md:flex-row! gap-6 my-8; */
 }
 
 .wp-block-column {
