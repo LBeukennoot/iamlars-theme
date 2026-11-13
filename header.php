@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html <?php language_attributes(); ?> class="<?php echo is_front_page() ? 'max-h-screen overflow-hidden' : ''; ?>">
+<html <?php language_attributes(); ?> class="<?php echo (is_front_page() || is_home() || is_archive()) ? 'max-h-screen overflow-hidden' : ''; ?>">
 
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
@@ -28,5 +28,4 @@
 
         <!-- Foreground Content Wrapper -->
         <div
-            class="relative z-10 w-full h-full transition-opacity px-4 flex justify-center"
-            :class="$store.page.isLoading ? 'opacity-0!' : 'opacity-100!'">
+            class="relative z-10 w-full h-full px-4 flex justify-center">

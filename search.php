@@ -1,8 +1,8 @@
 <?php get_header(); ?>
 
-<div class="container mx-auto px-4 pt-24 pb-16">
+<div class="container mx-auto px-4 mt-[25vh] pb-16">
     <h1 class="mb-10 w-full text-center! lowercase">
-        <?php printf(esc_html__('search results for: "%s"', 'iamlars-theme'), '<span>' . esc_html(get_search_query()) . '</span>'); ?>
+        <?php printf(esc_html__('search results for: ‘%s’', 'iamlars-theme'), '<span>' . esc_html(get_search_query()) . '</span>'); ?>
     </h1>
 
     <?php if (have_posts()) : ?>
@@ -47,7 +47,7 @@
                             }
                         }
                     }"
-                    class="relative w-60 sm:w-75 h-85 sm:h-100"
+                    class="relative clickable w-60 sm:w-75 h-85 sm:h-100"
                 >
                     <a href="<?php echo esc_url($post_data['permalink']); ?>">
                         <?php get_template_part('template-parts/components/card'); ?>

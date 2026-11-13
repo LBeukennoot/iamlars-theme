@@ -44,34 +44,36 @@ if (empty($archive_label) && !is_home()) {
         id="ring-gallery-root"
         x-data="ringGallery(<?php echo esc_attr(json_encode($gallery_data)); ?>)"
         x-cloak
-        class="relative w-screen h-screen flex flex-col items-center justify-around select-none cursor-grab active:cursor-grabbing overflow-visible pt-20 pb-8"
+        class="relative w-full h-screen flex flex-col items-center justify-around select-none cursor-grab active:cursor-grabbing overflow-visible pt-20 pb-8"
+
         @pointerdown="onPointerDown($event)"
         @pointermove.window="onPointerMove($event)"
         @pointerup.window="onPointerUp()"
-        @pointercancel.window="onPointerUp()"
-        @wheel.prevent="onWheel($event)">
+        @pointercancel.window="onPointerUp()">
 
-        <?php if (!empty($archive_label)) : ?>
-            <p class="text-secondary font-display text-xl lowercase tracking-wide">
-                posts with <?php echo esc_html($archive_label); ?>
-            </p>
-        <?php endif; ?>
-
+        <!-- Fixed parent track: The inner wrapper divs take inset-0 to fill this box -->
         <div class="relative w-60 sm:w-75 h-85 sm:h-100">
-            <template x-for="(post, index) in posts" :key="post.id">
-                <?php get_template_part('template-parts/components/card'); ?>
-            </template>
+            <?php foreach ($gallery_data as $index => $post_item) : ?>
+                <!-- Alpine transformation wrapper -->
+                <div
+                    class="absolute inset-0"
+                    :style="getCardTransform(<?php echo (int) $index; ?>)"
+                    @click="handleCardClick(<?php echo (int) $index; ?>)">
+                    <?php get_template_part('template-parts/components/card', null, $post_item); ?>
+                </div>
+            <?php endforeach; ?>
         </div>
 
         <div
-            class="flex flex-col gap-3 lowercase transition-opacity duration-500 h-56 sm:h-64 shrink-0 max-w-2xl"
-            :class="(Math.abs(velocity) > 0.05) ? 'opacity-0 duration-0!' : 'opacity-100'">
-            <h1 class="text-secondary font-display font-bold text-4xl! sm:text-6xl! text-center! line-clamp-1 pb-1.5 sm:pb-5" x-text="activePost.title"></h1>
-            <h2 class="text-secondary font-sans! font-extralight! text-2xl! sm:text-3xl! text-center! line-clamp-2 leading-snug" x-text="activePost.excerpt"></h2>
-            <button
-                class="text-white bg-primary px-5 py-3 rounded-4xl mx-auto font-sans text-xl cursor-pointer hover:opacity-80 active:scale-90"
-                @pointerdown.stop
-                @click.prevent="$store.page.navigateTo(activePost.permalink)">read &rarr;</button>
+            class="flex flex-col gap-3 lowercase  h-56 sm:h-64 shrink-0 max-w-2xl">
+            <h1 class="text-secondary font-display font-bold text-4xl! sm:text-6xl! text-center!">posts about</h1>
+            <h2 class="text-secondary font-sans! font-extralight! text-2xl! sm:text-3xl! text-center! mb-5"><?php echo $archive_label . ' (' .  count($gallery_data) . ')' ?></h2>
+
+            <a
+                class="button lowercase transition-opacity duration-500"
+                :class="(Math.abs(velocity) > 0.05) ? 'opacity-0 duration-0!' : 'opacity-100'"
+                :href="activePost.permalink">
+                <span x-text="activePost.title"></span><span class="ml-1.5 arrow-right"></span></a>
         </div>
 
     </div>

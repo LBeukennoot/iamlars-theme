@@ -6,18 +6,16 @@
     <div class="prose prose-invert prose-primary max-w-2xl mx-auto entry-content flex flex-col gap-10 w-full">
         <?php the_content(); ?>
     </div>
-</div>
-</div>
 
-<div>
-    <h2 class="mt-20 mb-5 w-full text-center!">more projects</h2>
+    <div>
+        <hr class="border! border-primary w-full mb-15" />
+        <h2 class="mb-5 w-full text-center!">more projects</h2>
 
-    <div class="flex w-full justify-center">
-        <div class="relative w-60 sm:w-75 h-85 sm:h-100">
+        <div class="flex w-full justify-center gap-6 flex-wrap">
             <?php
             $random_query = new WP_Query([
                 'post_type'           => 'post',
-                'posts_per_page'      => 1,
+                'posts_per_page'      => 2, // Changed to 2 for side-by-side
                 'orderby'             => 'rand',
                 'post_status'         => 'publish',
                 'ignore_sticky_posts' => true,
@@ -28,7 +26,7 @@
                 while ($random_query->have_posts()) :
                     $random_query->the_post();
 
-                    // Format categories to match what x-for="cat in post.categories" expects
+                    // Format categories
                     $raw_categories = get_the_category();
                     $categories = array_map(function ($cat) {
                         return [
@@ -39,36 +37,24 @@
                         ];
                     }, $raw_categories ?: []);
 
-                    // Build the exact post object structure expected by card.php
+                    // Build the args array
                     $random_post_data = [
                         'id'         => get_the_ID(),
                         'title'      => html_entity_decode(get_the_title(), ENT_QUOTES, 'UTF-8'),
                         'excerpt'    => get_the_excerpt(),
                         'permalink'  => get_permalink(),
-                        'image'      => get_the_post_thumbnail_url($post, 'large') ?: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80',
+                        'image'      => get_the_post_thumbnail_url(get_the_ID(), 'large') ?: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80',
                         'categories' => $categories,
                     ];
             ?>
 
-                    <!-- Provide the expected 'post' scope and safe no-ops for ringGallery helpers -->
-                    <div
-                        x-data="{
-                post: <?php echo esc_attr(json_encode($random_post_data)); ?>,
-                index: 0,
-                getCardTransform() { return {}; },
-                handleCardClick() {
-                    if (this.$store?.page?.navigateTo) {
-                        this.$store.page.navigateTo(this.post.permalink);
-                    } else {
-                        window.location.href = this.post.permalink;
-                    }
-                }
-            }"
-                        class="relative w-60 sm:w-75 h-85 sm:h-100">
-                        <a href="<?php echo $random_post_data['permalink'] ?>">
-                            <?php get_template_part('template-parts/components/card'); ?>
-                        </a>
-                    </div>
+                    <!-- Card Wrapper (No Alpine needed!) -->
+                    <a href="<?php echo esc_url($random_post_data['permalink']); ?>" class="relative block w-60 sm:w-75 h-85 sm:h-100 clickable">
+                        <?php
+                        // Pass data cleanly through $args
+                        get_template_part('template-parts/components/card', null, $random_post_data);
+                        ?>
+                    </a>
 
             <?php
                 endwhile;

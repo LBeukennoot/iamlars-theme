@@ -18,7 +18,7 @@ $social_items    = $socials_menu_id ? wp_get_nav_menu_items($socials_menu_id) : 
                     href="<?= esc_url($item->url); ?>" 
                     title="<?= esc_attr($item->title); ?>"
                     aria-label="<?= esc_attr($item->title); ?>"
-                    class="text-secondary hover:text-primary transition-colors flex items-center justify-center active:scale-90"
+                    class="text-secondary hover:text-primary transition-colors flex items-center justify-center clickable"
                 >
                     <?= $item->title !== "about me" ? esc_html($item->title) : iamlars_get_icon_svg(iamlars_match_social_icon($item->url, $item->title), 'w-5 h-5 sm:w-8 sm:h-8 stroke-secondary') ?>
                 </a>
@@ -38,7 +38,7 @@ $social_items    = $socials_menu_id ? wp_get_nav_menu_items($socials_menu_id) : 
                     type="button" 
                     @click="open = !open; if(open) { $nextTick(() => $refs.searchInput.focus()) }"
                     aria-label="Toggle search"
-                    class="text-primary hover:text-primary transition-colors focus:outline-none flex items-center cursor-pointer active:scale-90"
+                    class="text-primary hover:text-primary transition-colors focus:outline-none flex items-center clickable"
                 >
                     <?= iamlars_get_icon_svg('search', 'w-5 h-5 sm:w-8 sm:h-8 stroke-current'); ?>
                 </button>
@@ -80,7 +80,7 @@ $social_items    = $socials_menu_id ? wp_get_nav_menu_items($socials_menu_id) : 
                     rel="noopener noreferrer" 
                     title="<?= esc_attr($item->title); ?>"
                     aria-label="<?= esc_attr($item->title); ?>"
-                    class="text-secondary hover:text-primary transition-colors flex items-center justify-center active:scale-90"
+                    class="text-secondary hover:text-primary transition-colors flex items-center justify-center clickable"
                 >
                     <?= iamlars_get_icon_svg($icon_slug, 'w-5 h-5 sm:w-8 sm:h-8 stroke-current'); ?>
                 </a>
