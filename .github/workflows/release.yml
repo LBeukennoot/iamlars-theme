@@ -36,6 +36,11 @@ jobs:
           cp -r dist package/iamlars-theme/
           cp -r template-parts package/iamlars-theme/
           cp -r vendor package/iamlars-theme/
+
+          # Create the missing directory for icons
+          mkdir -p package/iamlars-theme/src/assets/
+
+          # Copy icons
           cp -r src/assets/icons package/iamlars-theme/src/assets/
 
           # 3. Copy top-level theme files (PHP templates, style.css, screenshot.png)
