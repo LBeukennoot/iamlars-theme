@@ -61,7 +61,7 @@ $gallery_data = array_map(function ($post) {
         <h1 class="text-secondary font-display font-bold text-4xl! sm:text-6xl! text-center!">i am lars</h1>
         <h2 class="text-secondary font-sans! font-extralight! text-2xl! sm:text-3xl! text-center! mb-5">creative developer</h2>
         <a
-            class="button lowercase transition-opacity duration-500"
+            class="button lowercase transition-opacity duration-500 text-white!"
             :class="(Math.abs(velocity) > 0.05) ? 'opacity-0 duration-0!' : 'opacity-100'"
             :href="activePost.permalink">
             <span x-text="activePost.title"></span><span class="ml-1.5 arrow-right"></span></a>

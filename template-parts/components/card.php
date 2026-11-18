@@ -11,7 +11,7 @@ $categories = $args['categories'] ?? get_the_category($post_id);
     style="background-image: url('<?php echo esc_url($image); ?>');">
     <div class="absolute bottom-0 m-4 sm:m-5">
         <?php if (!empty($categories)) : ?>
-            <div class="flex flex-wrap content-end items-end gap-2 h-full z-10 pointer-events-none">
+            <div class="flex flex-wrap-reverse content-end items-end gap-2 h-full z-10 pointer-events-none">
                 <?php foreach ($categories as $cat) : 
                     // Support both Alpine-formatted arrays and standard WP_Term objects
                     $cat_name = is_object($cat) ? $cat->name : ($cat['name'] ?? $cat);
