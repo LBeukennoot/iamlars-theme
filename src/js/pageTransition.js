@@ -1,4 +1,4 @@
-window.Alpine.store('page', {
+window.Alpine.store("page", {
   isLoading: false,
   scroll: 0,
   maxScroll: 0,
@@ -8,11 +8,15 @@ window.Alpine.store('page', {
 
   init() {
     this.updateScrollMetrics();
-    window.addEventListener('resize', () => this.updateScrollMetrics());
+    this.handleScroll();
+    window.addEventListener("resize", () => this.updateScrollMetrics());
   },
 
   updateScrollMetrics() {
-    this.maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+    this.maxScroll = Math.max(
+      document.documentElement.scrollHeight - window.innerHeight,
+      1,
+    );
   },
 
   handleScroll() {
@@ -31,5 +35,5 @@ window.Alpine.store('page', {
     setTimeout(() => {
       window.location.href = url;
     }, delay);
-  }
+  },
 });
