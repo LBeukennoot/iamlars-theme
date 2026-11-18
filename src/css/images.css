@@ -41,3 +41,7 @@ img.alignnone,
 .wp-caption-text {
   @apply mt-1 text-xs text-white;
 }
+
+.wp-block-image {
+  @apply cursor-pointer
+}
