@@ -66,11 +66,11 @@ if (empty($archive_label) && !is_home()) {
 
         <div
             class="flex flex-col gap-3 lowercase  h-56 sm:h-64 shrink-0 max-w-2xl">
-            <h1 class="text-secondary font-display font-bold text-4xl! sm:text-6xl! text-center!">posts about</h1>
-            <h2 class="text-secondary font-sans! font-extralight! text-2xl! sm:text-3xl! text-center! mb-5"><?php echo $archive_label . ' (' .  count($gallery_data) . ')' ?></h2>
+            <h1 class="text-secondary font-display font-bold text-4xl! sm:text-6xl! text-center!">posts about:</h1>
+            <h2 class="text-secondary font-sans! font-extralight! text-2xl! sm:text-3xl! text-center! mb-5"><?php echo $archive_label . ' (' .  count($gallery_data) . ' in total)' ?></h2>
 
             <a
-                class="button lowercase transition-opacity duration-500"
+                class="button lowercase transition-opacity duration-500 text-white!"
                 :class="(Math.abs(velocity) > 0.05) ? 'opacity-0 duration-0!' : 'opacity-100'"
                 :href="activePost.permalink">
                 <span x-text="activePost.title"></span><span class="ml-1.5 arrow-right"></span></a>

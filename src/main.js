@@ -2,6 +2,7 @@ import './main.css';
 import Alpine from 'alpinejs';
 import './js/ringGallery';
 import './js/pageTransition';
+import './js/imageLightbox';
 
 window.Alpine = window.Alpine || Alpine;
 
