@@ -1,0 +1,16 @@
+/* Screen reader only (hidden visually, readable by assistive tech) */
+.screen-reader-text {
+  @apply sr-only;
+}
+
+.screen-reader-text:focus {
+  @apply not-sr-only fixed top-4 left-4 z-50 rounded-lg bg-white px-4 py-2 font-medium text-slate-900 shadow-xl;
+}
+
+/* Clearfix for floated post images */
+.clear,
+.entry-content::after {
+  content: "";
+  display: table;
+  clear: both;
+}

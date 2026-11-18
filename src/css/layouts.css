@@ -1,0 +1,25 @@
+/* Wide Width (extends past article column) */
+.alignwide,
+.wp-block-group.alignwide,
+.wp-block-image.alignwide {
+  @apply mx-auto my-12 max-w-6xl;
+}
+
+/* Full Width (edge-to-edge screen bleed) */
+.alignfull,
+.wp-block-group.alignfull,
+.wp-block-image.alignfull {
+  @apply relative right-1/2 left-1/2 my-16 -mr-[50vw] -ml-[50vw] w-screen max-w-none;
+}
+
+/* --------------------------------------------------------------------------
+   Columns
+   -------------------------------------------------------------------------- */
+
+.wp-block-columns {
+  /* @apply flex flex-col! md:flex-row! gap-6 my-8; */
+}
+
+.wp-block-column {
+  @apply min-w-0 flex-1;
+}

@@ -139,7 +139,7 @@ add_action('after_setup_theme', function () {
     add_theme_support('post-thumbnails');
     add_theme_support('editor-styles');
 
-    $editor_css = theme_asset('src/editor-style.css') ?: theme_asset('editor-style.css');
+    $editor_css = theme_asset('src/main.css') ?: theme_asset('main.css');
     if ($editor_css && file_exists(get_template_directory() . '/' . $editor_css)) {
         add_editor_style($editor_css);
     }

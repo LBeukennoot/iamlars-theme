@@ -1,0 +1,65 @@
+p,
+li,
+h1,
+h2,
+h3 {
+  @apply text-left text-secondary;
+}
+
+h1,
+h2,
+h3 {
+  @apply font-display;
+}
+
+h1 {
+  @apply text-6xl;
+}
+
+.wp-block-post-title {
+  @apply text-center lowercase;
+}
+
+h2 {
+  @apply text-4xl font-bold;
+}
+
+h3 {
+  @apply text-2xl font-black;
+}
+
+li {
+  @apply ml-7 list-disc marker:text-primary;
+}
+
+img {
+  @apply mx-auto rounded-3xl;
+}
+
+figure {
+  @apply mb-0 flex flex-col justify-center;
+}
+
+a {
+  @apply text-inherit underline;
+}
+
+a:hover {
+  @apply cursor-pointer text-inherit;
+}
+
+.wp-block-paragraph a[target="_blank"]::after,
+li a[target="_blank"]::after,
+td a[target="_blank"]::after,
+.wp-block-button a[target="_blank"]::after {
+  content: "";
+  -webkit-mask: url("../assets/icons/external-link.svg") no-repeat 50% 50%;
+  mask: url("../assets/icons/external-link.svg") no-repeat 50% 50%;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  @apply ml-1 inline-block h-3.25 w-3.25 bg-secondary;
+}
+
+.wp-block-button a[target="_blank"]::after {
+  @apply ml-2! bg-white!;
+}

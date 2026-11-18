@@ -1,0 +1,43 @@
+/* Center Alignment */
+.aligncenter,
+div.aligncenter,
+.wp-block-image.aligncenter {
+  @apply mx-auto my-8 block text-center;
+}
+
+/* Left Alignment */
+.alignleft,
+img.alignleft,
+.wp-block-image.alignleft {
+  @apply float-left mt-2 mr-6 mb-4 max-w-full;
+}
+
+/* Right Alignment */
+.alignright,
+img.alignright,
+.wp-block-image.alignright {
+  @apply float-right mt-2 mb-4 ml-6 max-w-full;
+}
+
+/* None / Full Width within flow */
+.alignnone,
+img.alignnone,
+.wp-block-image.alignnone {
+  @apply my-6 block h-auto max-w-full;
+}
+
+/* Captions */
+.wp-caption,
+.wp-block-image figcaption,
+.wp-block-embed figcaption,
+.wp-block-gallery figcaption,
+.wp-block-table figcaption,
+.wp-block-video figcaption {
+  @apply mx-auto table;
+
+  @apply mx-auto mt-3 pill-tag line-clamp-1 bg-primary py-0! text-white;
+}
+
+.wp-caption-text {
+  @apply mt-1 text-xs text-white;
+}

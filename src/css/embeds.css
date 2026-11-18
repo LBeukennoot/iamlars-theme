@@ -1,0 +1,18 @@
+.wp-block-embed,
+.wp-block-embed-youtube {
+  @apply overflow-hidden rounded-2xl border border-white/10 shadow-xl;
+}
+
+.wp-block-embed__wrapper {
+  @apply relative aspect-video w-full;
+}
+
+.wp-block-embed__wrapper iframe {
+  @apply absolute inset-0 h-full w-full overflow-hidden! rounded-3xl!;
+}
+
+.wp-block-embed,
+.wp-block-video,
+.wp-block-video video {
+  @apply overflow-hidden! rounded-3xl! shadow-none!;
+}

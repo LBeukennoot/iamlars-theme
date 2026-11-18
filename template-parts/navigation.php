@@ -14,37 +14,34 @@ $social_items    = $socials_menu_id ? wp_get_nav_menu_items($socials_menu_id) : 
         <!-- Dynamic Primary Menu Links (e.g. About Me) -->
         <?php if (!empty($primary_items)) : ?>
             <?php foreach ($primary_items as $item) : ?>
-                <a 
-                    href="<?= esc_url($item->url); ?>" 
+                <a
+                    href="<?= esc_url($item->url); ?>"
                     title="<?= esc_attr($item->title); ?>"
                     aria-label="<?= esc_attr($item->title); ?>"
-                    class="text-secondary hover:text-primary transition-colors flex items-center justify-center clickable"
-                >
+                    class="text-secondary hover:text-primary transition-colors flex items-center justify-center clickable">
                     <?= $item->title !== "about me" ? esc_html($item->title) : iamlars_get_icon_svg(iamlars_match_social_icon($item->url, $item->title), 'w-5 h-5 sm:w-8 sm:h-8 stroke-secondary') ?>
                 </a>
             <?php endforeach; ?>
         <?php endif; ?>
 
         <!-- Search Component with Expanding Input -->
-        <div 
-            x-data="{ open: false }" 
-            @click.outside="open = false" 
+        <div
+            x-data="{ open: false }"
+            @click.outside="open = false"
             @keydown.escape.window="open = false"
-            class="flex items-center"
-        >
+            class="flex items-center">
             <form role="search" method="get" action="<?= esc_url(home_url('/')); ?>" class="flex items-center">
                 <!-- Search Toggle / Submit Button -->
-                <button 
-                    type="button" 
+                <button
+                    type="button"
                     @click="open = !open; if(open) { $nextTick(() => $refs.searchInput.focus()) }"
                     aria-label="Toggle search"
-                    class="text-primary hover:text-primary transition-colors focus:outline-none flex items-center clickable"
-                >
+                    class="text-primary hover:text-primary transition-colors focus:outline-none flex items-center clickable">
                     <?= iamlars_get_icon_svg('search', 'w-5 h-5 sm:w-8 sm:h-8 stroke-current'); ?>
                 </button>
 
                 <!-- Input field that expands to the right -->
-                <div 
+                <div
                     x-show="open"
                     x-cloak
                     x-transition:enter="transition-all  duration-300"
@@ -53,15 +50,13 @@ $social_items    = $socials_menu_id ? wp_get_nav_menu_items($socials_menu_id) : 
                     x-transition:leave="transition-all  duration-200"
                     x-transition:leave-start="w-44 opacity-100"
                     x-transition:leave-end="w-0 opacity-0"
-                    class="overflow-hidden flex items-center h-full"
-                >
-                    <input 
+                    class="overflow-hidden flex items-center h-full">
+                    <input
                         x-ref="searchInput"
-                        type="search" 
-                        name="s" 
-                        placeholder="Search..." 
-                        class="h-full ml-2 px-2.5 text-sm bg-white text-primary border-0 focus:ring-0 focus:outline-none w-40"
-                    />
+                        type="search"
+                        name="s"
+                        placeholder="Search..."
+                        class="h-full ml-2 px-2.5 text-sm bg-white text-primary border-0 focus:ring-0 focus:outline-none w-40" />
                 </div>
             </form>
         </div>
@@ -71,17 +66,16 @@ $social_items    = $socials_menu_id ? wp_get_nav_menu_items($socials_menu_id) : 
     <div class="items-center">
         <?php if (!empty($social_items)) : ?>
             <?php foreach ($social_items as $item) : ?>
-                <?php 
-                    $icon_slug = iamlars_match_social_icon($item->url, $item->title); 
+                <?php
+                $icon_slug = iamlars_match_social_icon($item->url, $item->title);
                 ?>
-                <a 
-                    href="<?= esc_url($item->url); ?>" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
+                <a
+                    href="<?= esc_url($item->url); ?>"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     title="<?= esc_attr($item->title); ?>"
                     aria-label="<?= esc_attr($item->title); ?>"
-                    class="text-secondary hover:text-primary transition-colors flex items-center justify-center clickable"
-                >
+                    class="text-secondary hover:text-primary transition-colors flex items-center justify-center clickable">
                     <?= iamlars_get_icon_svg($icon_slug, 'w-5 h-5 sm:w-8 sm:h-8 stroke-current'); ?>
                 </a>
             <?php endforeach; ?>

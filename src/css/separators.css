@@ -1,0 +1,4 @@
+hr,
+.wp-block-separator {
+  @apply border-0 border-t-2 border-solid! border-primary! bg-transparent!;
+}

@@ -1,0 +1,29 @@
+/* .wp-block-buttons {
+  @apply flex flex-wrap items-center gap-4;
+} */
+
+.wp-block-button {
+  @apply w-auto!;
+}
+
+.wp-block-button__link {
+  @apply button clickable;
+}
+
+.wp-block-button__link::after {
+  content: "";
+  -webkit-mask: url("../assets/icons/arrow-right.svg") no-repeat 50% 50%;
+  mask: url("../assets/icons/arrow-right.svg") no-repeat 50% 50%;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  @apply ml-2 inline-block h-2.5 w-4 bg-white;
+}
+
+.wp-block-button a[target="_blank"]::after {
+  @apply ml-2 bg-white!;
+}
+
+/* Outline Style */
+.wp-block-button.is-style-outline .wp-block-button__link {
+  @apply border bg-transparent text-white shadow-none;
+}

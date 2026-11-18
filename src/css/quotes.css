@@ -1,0 +1,21 @@
+/* Blockquote */
+.wp-block-quote {
+  @apply flex flex-col gap-10 border-l-2 border-primary pl-6 text-white/90;
+}
+
+.wp-block-quote.is-style-large {
+  @apply my-12 text-2xl leading-relaxed font-light;
+}
+
+.wp-block-quote cite {
+  @apply mt-3 block font-normal text-white/50;
+}
+
+/* Pullquote */
+.wp-block-pullquote {
+  @apply my-10 border-y border-white/10 py-6 text-center;
+}
+
+.wp-block-pullquote blockquote p {
+  @apply font-semibold text-white;
+}

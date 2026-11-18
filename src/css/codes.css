@@ -1,0 +1,5 @@
+/* Code & Preformatted */
+.wp-block-code,
+pre.wp-block-preformatted {
+  @apply overflow-x-auto rounded-2xl border border-white/10 bg-primary p-4 font-mono text-xs text-white;
+}

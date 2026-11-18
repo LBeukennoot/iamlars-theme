@@ -1,0 +1,33 @@
+/* 1. Base Table Container & Structure */
+.wp-block-table {
+  @apply overflow-hidden;
+}
+
+.entry-content table,
+.wp-block-table table {
+  @apply border-separate border-spacing-0 rounded-2xl border-2 border-primary bg-white px-2;
+}
+
+.wp-block-table thead tr th,
+.entry-content thead tr th {
+  @apply border-0 border-b-2 border-primary text-left font-display text-lg font-semibold text-secondary;
+}
+
+/* 3. Table Cells & Dividing Lines */
+.wp-block-table td,
+.entry-content td,
+.wp-block-table th,
+.entry-content th {
+  @apply rounded-none! border-0 px-4 py-3 text-sm text-secondary;
+}
+
+/* 5. Remove bottom border from last row */
+.wp-block-table tbody tr:not(:last-child) td,
+.entry-content tbody tr:not(:last-child) td,
+.wp-block-table thead {
+  @apply border-b-2 border-primary;
+}
+
+.wp-block-table tfoot td {
+  @apply border-t-2 border-primary font-black;
+}

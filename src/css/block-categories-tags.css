@@ -1,0 +1,36 @@
+.wp-block-categories-list li a,
+.wp-block-tag-cloud a {
+  @apply pill-tag clickable bg-primary text-white;
+}
+
+.wp-block-categories-list {
+  @apply p-0!;
+}
+
+.wp-block-categories-list,
+.wp-block-categories-list li,
+.wp-block-categories-list li a,
+.wp-block-tag-cloud,
+.wp-block-tag-cloud a {
+  @apply m-0 flex list-none! flex-wrap gap-2 no-underline!;
+}
+
+.wp-block-post-excerpt__more-text {
+  @apply hidden;
+}
+
+.wp-block-post-excerpt p {
+  @apply text-center! font-sans! text-4xl! font-extralight! text-secondary lowercase!;
+}
+
+.wp-block-post-terms {
+  @apply flex flex-wrap justify-center gap-2;
+}
+
+.wp-block-post-terms span {
+  @apply hidden;
+}
+
+.wp-block-post-terms a {
+  @apply pill-tag clickable bg-primary text-white;
+}
