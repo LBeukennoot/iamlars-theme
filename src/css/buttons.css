@@ -6,6 +6,10 @@
   @apply w-auto!;
 }
 
+.wp-block-button:hover {
+  @apply text-white;
+}
+
 .wp-block-button__link {
   @apply button clickable;
 }
