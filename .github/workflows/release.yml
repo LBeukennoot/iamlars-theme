@@ -21,6 +21,26 @@ jobs:
           node-version: 22
           cache: 'yarn'
 
+      - name: Set Release Version
+        run: |
+          # Strip leading 'v' from tag (e.g. v1.1.2 -> 1.1.2)
+          VERSION="${GITHUB_REF_NAME#v}"
+          echo "Detected release version: $VERSION"
+
+          # 1. Update version in package.json (without creating a git tag)
+          yarn version --new-version "$VERSION" --no-git-tag-version
+
+          # 2. Update Version header in style.css (required by WordPress & PUC for themes)
+          if [ -f style.css ]; then
+            sed -i -E "s/^([[:space:]]*\*?[[:space:]]*Version:[[:space:]]*).*/\1$VERSION/" style.css
+          fi
+
+          # 3. Update version in functions.php (handles Version: header or define('...VERSION...', '...'))
+          if [ -f functions.php ]; then
+            sed -i -E "s/^([[:space:]]*\*?[[:space:]]*Version:[[:space:]]*).*/\1$VERSION/" functions.php
+            sed -i -E "s/(define\(\s*['\"][A-Z0-9_]*VERSION['\"]\s*,\s*['\"])[^'\"]*(['\"])/\1$VERSION\2/" functions.php
+          fi
+
       - name: Install dependencies & Compile Theme Assets
         run: |
           yarn install --frozen-lockfile --ignore-engines
