@@ -8,7 +8,7 @@ $socials_menu_id = $locations['socials_menu'] ?? null;
 $social_items    = $socials_menu_id ? wp_get_nav_menu_items($socials_menu_id) : [];
 ?>
 
-<div class="fixed left-1/2 -translate-x-1/2 flex gap-2 z-50 mt-2 [&>div]:flex [&>div]:gap-5 [&>div]:px-5 [&>div]:py-3 [&>div]:rounded-full [&>div]:bg-white items-center drop-shadow-2xl">
+<div class="fixed right-0 sm:right-auto sm:left-1/2 sm:-translate-x-1/2 flex gap-2 z-50 m-2 [&>div]:flex [&>div]:gap-5 [&>div]:px-5 [&>div]:py-3 [&>div]:rounded-full [&>div]:bg-white items-center drop-shadow-2xl">
     <!-- 1. Primary Menu & Expanding Search -->
     <div class="items-center">
         <!-- Dynamic Primary Menu Links (e.g. About Me) -->
