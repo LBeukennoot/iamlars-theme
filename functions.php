@@ -16,7 +16,7 @@ if (file_exists($puc_file)) {
         'iamlars-theme'
     );
 
-    $myUpdateChecker->setBranch('main');
+    // $myUpdateChecker->setBranch('main');
     $myUpdateChecker->getVcsApi()->enableReleaseAssets('/\.zip($|[?&#])/i');
 }
 
