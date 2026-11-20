@@ -38,12 +38,12 @@
                     <img
                         :src="src"
                         :alt="alt"
-                        class="max-h-[80vh] w-auto max-w-full object-contain rounded-2xl shadow-2xl select-none" />
+                        class="max-h-[80vh] w-auto max-w-full object-contain rounded-xl! select-none" />
 
                     <figcaption
                         x-show="caption !== ''"
                         x-html="caption"
-                        class="text-white/90 font-sans text-sm sm:text-base text-center max-w-2xl leading-relaxed"></figcaption>
+                        class="text-white/90 font-sans text-sm sm:text-base text-center whitespace-normal max-w-2xl"></figcaption>
                 </figure>
             </div>
         </template>
