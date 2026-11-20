@@ -5,30 +5,19 @@ if (!defined('ABSPATH')) {
 }
 
 // 1. Initialize Plugin Update Checker (v6) for Themes
-$puc_file = get_template_directory() . '/vendor/plugin-update-checker/plugin-update-checker.php';
+$puc_file = __DIR__ . '/vendor/plugin-update-checker/plugin-update-checker.php';
 
 if (file_exists($puc_file)) {
     require_once $puc_file;
 
-    if (class_exists('\YahnisElsts\PluginUpdateChecker\v6\PucFactory')) {
-        $myUpdateChecker = \YahnisElsts\PluginUpdateChecker\v6\PucFactory::buildUpdateChecker(
-            'https://github.com/LBeukennoot/iamlars-theme/',
-            get_template_directory(),
-            'iamlars-theme'
-        );
+    $myUpdateChecker = \YahnisElsts\PluginUpdateChecker\v6\PucFactory::buildUpdateChecker(
+        'https://github.com/LBeukennoot/iamlars-theme/',
+        __FILE__,
+        'iamlars-theme'
+    );
 
-        $myUpdateChecker->setBranch('main');
-
-        /** @var \YahnisElsts\PluginUpdateChecker\v6\Vcs\GitHubApi|null $vcsApi */
-        $vcsApi = method_exists($myUpdateChecker, 'getVcsApi') ? $myUpdateChecker->getVcsApi() : null;
-
-        if ($vcsApi && method_exists($vcsApi, 'enableReleaseAssets')) {
-            $vcsApi->enableReleaseAssets();
-            if (defined('IAMLARS_GITHUB_TOKEN')) {
-                $vcsApi->setAuthentication(IAMLARS_GITHUB_TOKEN);
-            }
-        }
-    }
+    $myUpdateChecker->setBranch('main');
+    $myUpdateChecker->getVcsApi()->enableReleaseAssets('/\.zip($|[?&#])/i');
 }
 
 /**
