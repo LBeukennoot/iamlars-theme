@@ -54,7 +54,19 @@ $gallery_data = array_map(function ($post) {
                 <?php get_template_part('template-parts/components/card', null, $post_item); ?>
             </div>
         <?php endforeach; ?>
+
+        <a
+            class="absolute top-full left-1/2 -translate-x-1/2 button lowercase transition-opacity duration-500 text-white! whitespace-nowrap mt-10"
+            :class="(Math.abs(velocity) > 0.05) ? 'opacity-0 duration-0!' : 'opacity-100'"
+            :href="activePost.permalink">
+            <span x-text="activePost.title"></span><span class="ml-1.5 arrow-right"></span></a>
     </div>
+
+    <?php
+    $locations       = get_nav_menu_locations();
+    $primary_menu_id = $locations['primary_menu'] ?? null;
+    $primary_item   = $primary_menu_id ? wp_get_nav_menu_items($primary_menu_id) : [];
+    ?>
 
     <div
         class="flex flex-col gap-3 lowercase  h-56 sm:h-64 shrink-0 max-w-2xl">
@@ -62,9 +74,8 @@ $gallery_data = array_map(function ($post) {
         <h2 class="text-secondary font-sans! font-extralight! text-2xl! sm:text-3xl! text-center! mb-5">creative developer</h2>
         <a
             class="button lowercase transition-opacity duration-500 text-white!"
-            :class="(Math.abs(velocity) > 0.05) ? 'opacity-0 duration-0!' : 'opacity-100'"
-            :href="activePost.permalink">
-            <span x-text="activePost.title"></span><span class="ml-1.5 arrow-right"></span></a>
+            href="<?php echo $primary_item[0]->url ?>">
+            <span>about me</span><span class="ml-1.5 arrow-right"></span></a>
     </div>
 
 </div>
