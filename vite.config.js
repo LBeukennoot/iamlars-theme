@@ -15,7 +15,6 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: 'src/main.js',
-        // 'editor-style': 'src/editor-style.css',
       },
       output: {
         entryFileNames: 'assets/[name].js',
