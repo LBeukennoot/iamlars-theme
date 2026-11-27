@@ -1,7 +1,5 @@
-import Alpine from "alpinejs";
+import './js/alpineInit';
 import "./main.css";
-
-window.Alpine = window.Alpine || Alpine;
 
 import "./js/ringGallery";
 import "./js/pageTransition";
