@@ -2,7 +2,7 @@
 // Use passed $args, or fallback to standard WordPress loop functions if used outside a custom array
 $post_id    = $args['id'] ?? get_the_ID();
 $title      = $args['title'] ?? get_the_title($post_id);
-$image      = $args['image'] ?? (get_the_post_thumbnail_url($post_id, 'large') ?: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80');
+$image      = $args['image'] ?? (get_the_post_thumbnail_url($post_id, 'large') ?: '');
 $categories = $args['categories'] ?? get_the_category($post_id);
 ?>
 

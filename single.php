@@ -86,7 +86,7 @@
                         'title'      => html_entity_decode(get_the_title(), ENT_QUOTES, 'UTF-8'),
                         'excerpt'    => get_the_excerpt(),
                         'permalink'  => get_permalink(),
-                        'image'      => get_the_post_thumbnail_url(get_the_ID(), 'large') ?: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80',
+                        'image'      => get_the_post_thumbnail_url(get_the_ID(), 'large') ?: '',
                         'categories' => $categories,
                     ];
             ?>

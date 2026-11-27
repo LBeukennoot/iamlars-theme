@@ -24,7 +24,7 @@ if (have_posts()) :
             'id'         => get_the_ID(),
             'title'      => html_entity_decode(get_the_title(), ENT_QUOTES, 'UTF-8'),
             'permalink'  => get_permalink(),
-            'image'      => get_the_post_thumbnail_url(get_the_ID(), 'large') ?: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80',
+            'image'      => get_the_post_thumbnail_url(get_the_ID(), 'large') ?: '',
             'excerpt'    => wp_trim_words(get_the_excerpt(), 10),
             'categories' => $cat_list,
         ];
@@ -52,7 +52,7 @@ if (empty($archive_label) && !is_home()) {
         @pointercancel.window="onPointerUp()">
 
         <!-- Fixed parent track: The inner wrapper divs take inset-0 to fill this box -->
-        <div class="relative w-60 sm:w-75 h-85 sm:h-100">
+        <div class="relative w-60 sm:w-75 h-80 sm:h-100">
             <?php foreach ($gallery_data as $index => $post_item) : ?>
                 <!-- Alpine transformation wrapper -->
                 <div
@@ -62,18 +62,21 @@ if (empty($archive_label) && !is_home()) {
                     <?php get_template_part('template-parts/components/card', null, $post_item); ?>
                 </div>
             <?php endforeach; ?>
-        </div>
-
-        <div
-            class="flex flex-col gap-3 lowercase  h-56 sm:h-64 shrink-0 max-w-2xl">
-            <h1 class="text-secondary font-display font-bold text-4xl! sm:text-6xl! text-center!">posts about:</h1>
-            <h2 class="text-secondary font-sans! font-extralight! text-2xl! sm:text-3xl! text-center! mb-5"><?php echo $archive_label . ' (' .  count($gallery_data) . ' in total)' ?></h2>
 
             <a
-                class="button lowercase transition-opacity duration-500 text-white!"
+                class="absolute top-full left-1/2 -translate-x-1/2 button lowercase transition-opacity duration-500 text-white! mt-10"
                 :class="(Math.abs(velocity) > 0.05) ? 'opacity-0 duration-0!' : 'opacity-100'"
                 :href="activePost.permalink">
                 <span x-text="activePost.title"></span><span class="ml-1.5 arrow-right"></span></a>
+        </div>
+
+
+        <div
+            class="flex flex-col gap-3 lowercase  h-56 sm:h-64 shrink-0 max-w-2xl">
+            <h1 class="text-secondary font-display font-bold text-4xl! sm:text-6xl! text-center!"><?php echo $archive_label . ' posts' ?></h1>
+            <h2 class="text-secondary font-sans! font-extralight! text-2xl! sm:text-3xl! text-center! mb-5"><?php echo count($gallery_data) . ' in total' ?></h2>
+
+
         </div>
 
     </div>
