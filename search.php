@@ -47,7 +47,7 @@
                             }
                         }
                     }"
-                    class="relative clickable w-60 sm:w-75 h-85 sm:h-100"
+                    class="relative clickable w-60 sm:w-75 h-80 sm:h-100"
                 >
                     <a href="<?php echo esc_url($post_data['permalink']); ?>">
                         <?php get_template_part('template-parts/components/card'); ?>

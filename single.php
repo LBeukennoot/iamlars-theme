@@ -92,7 +92,7 @@
             ?>
 
                     <!-- Card Wrapper (No Alpine needed!) -->
-                    <a href="<?php echo esc_url($random_post_data['permalink']); ?>" class="relative block w-60 sm:w-75 h-85 sm:h-100 clickable">
+                    <a href="<?php echo esc_url($random_post_data['permalink']); ?>" class="relative block w-60 sm:w-75 h-80 sm:h-100 clickable">
                         <?php
                         // Pass data cleanly through $args
                         get_template_part('template-parts/components/card', null, $random_post_data);
