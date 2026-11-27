@@ -11,6 +11,13 @@ $social_items    = $socials_menu_id ? wp_get_nav_menu_items($socials_menu_id) : 
 <div class="fixed right-0 sm:right-auto sm:left-1/2 sm:-translate-x-1/2 flex gap-2 z-50 m-2 [&>div]:flex [&>div]:gap-5 [&>div]:px-5 [&>div]:py-3 [&>div]:rounded-full [&>div]:bg-white items-center drop-shadow-2xl">
     <!-- 1. Primary Menu & Expanding Search -->
     <div class="items-center">
+        <a
+            class="text-secondary"
+            @pointerdown.stop
+            @click.prevent="$store.page.navigateTo('<?php echo esc_url(home_url('/')); ?>')">
+            <?= iamlars_get_icon_svg(iamlars_match_social_icon('home'), 'w-5 h-5 sm:w-8 sm:h-8 stroke-secondary clickable') ?>
+        </a>
+
         <!-- Dynamic Primary Menu Links (e.g. About Me) -->
         <?php if (!empty($primary_items)) : ?>
             <?php foreach ($primary_items as $item) : ?>

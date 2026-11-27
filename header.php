@@ -23,8 +23,7 @@
 
         <div class="absolute inset-0 pointer-events-none -z-10 bg-[radial-gradient(rgba(255,255,255,0.45)_1px,transparent_1px)] bg-size-[30px_30px]" aria-hidden="true"></div>
 
-        <?php get_template_part('template-parts/navigation'); ?>
-        <?php get_template_part('template-parts/back_button'); ?>
+        <?php get_template_part('template-parts/components/navigation'); ?>
 
         <!-- Foreground Content Wrapper -->
         <div

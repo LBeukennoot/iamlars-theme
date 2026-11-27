@@ -64,7 +64,7 @@ if (empty($archive_label) && !is_home()) {
             <?php endforeach; ?>
 
             <a
-                class="absolute top-full left-1/2 -translate-x-1/2 button lowercase transition-opacity duration-500 text-white! mt-10"
+                class="absolute top-full left-1/2 -translate-x-1/2 button lowercase transition-opacity duration-500 text-white! whitespace-nowrap mt-10"
                 :class="(Math.abs(velocity) > 0.05) ? 'opacity-0 duration-0!' : 'opacity-100'"
                 :href="activePost.permalink">
                 <span x-text="activePost.title"></span><span class="ml-1.5 arrow-right"></span></a>
