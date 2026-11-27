@@ -23,7 +23,7 @@ $categories = $args['categories'] ?? get_the_category($post_id);
             </div>
         <?php endif; ?>
         
-        <h1 class="font-display text-white! text-3xl! sm:text-5xl! lowercase drop-shadow-md">
+        <h1 class="font-display text-white! text-3xl! sm:text-5xl! lowercase drop-shadow-md text-left!">
             <?php echo esc_html($title); ?>
         </h1>
     </div>
