@@ -44,7 +44,7 @@ $gallery_data = array_map(function ($post) {
     @pointercancel.window="onPointerUp()">
 
     <!-- Fixed parent track: The inner wrapper divs take inset-0 to fill this box -->
-    <div class="relative w-60 sm:w-75 h-85 sm:h-100">
+    <div class="relative w-60 sm:w-75 h-80 sm:h-100">
         <?php foreach ($gallery_data as $index => $post_item) : ?>
             <!-- Alpine transformation wrapper -->
             <div
