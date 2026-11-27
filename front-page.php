@@ -36,7 +36,7 @@ $gallery_data = array_map(function ($post) {
     id="ring-gallery-root"
     x-data="ringGallery(<?php echo esc_attr(json_encode($gallery_data)); ?>)"
     x-cloak
-    class="relative w-full h-screen flex flex-col items-center justify-around select-none cursor-grab active:cursor-grabbing overflow-visible pt-20 pb-8"
+    class="relative w-full h-screen flex flex-col items-center justify-around select-none cursor-grab active:cursor-grabbing overflow-visible pt-10 sm:pt-20 pb-8"
 
     @pointerdown="onPointerDown($event)"
     @pointermove.window="onPointerMove($event)"
@@ -56,7 +56,7 @@ $gallery_data = array_map(function ($post) {
         <?php endforeach; ?>
 
         <a
-            class="absolute top-full left-1/2 -translate-x-1/2 button lowercase transition-opacity duration-500 text-white! whitespace-nowrap mt-10"
+            class="absolute top-full left-1/2 -translate-x-1/2 button lowercase transition-opacity duration-500 text-white! whitespace-nowrap mt-3 sm:mt-10"
             :class="(Math.abs(velocity) > 0.05) ? 'opacity-0 duration-0!' : 'opacity-100'"
             :href="activePost.permalink">
             <span x-text="activePost.title"></span><span class="ml-1.5 arrow-right"></span></a>
@@ -69,9 +69,9 @@ $gallery_data = array_map(function ($post) {
     ?>
 
     <div
-        class="flex flex-col gap-3 lowercase  h-56 sm:h-64 shrink-0 max-w-2xl">
+        class="flex flex-col justify-start sm:gap-3 lowercase  max-w-2xl">
         <h1 class="text-secondary font-display font-bold text-4xl! sm:text-6xl! text-center!">i am lars</h1>
-        <h2 class="text-secondary font-sans! font-extralight! text-2xl! sm:text-3xl! text-center! mb-5">creative developer</h2>
+        <h2 class="text-secondary font-sans! font-extralight! text-2xl! sm:text-3xl! text-center! mb-1 sm:mb-5">creative developer</h2>
         <a
             class="button lowercase transition-opacity duration-500 text-white!"
             href="<?php echo $primary_item[0]->url ?>">
