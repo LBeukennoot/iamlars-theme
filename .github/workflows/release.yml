@@ -63,10 +63,11 @@ jobs:
           # Copy icons
           cp -r src/assets/icons package/iamlars-theme/src/assets/
 
-          # 3. Copy top-level theme files (PHP templates, style.css, screenshot.png)
+          # 3. Copy top-level theme files (PHP templates, style.css, screenshot.png/jpg)
           cp *.php package/iamlars-theme/ 2>/dev/null || true
           cp style.css package/iamlars-theme/
           cp screenshot.png package/iamlars-theme/ 2>/dev/null || true
+          cp screenshot.jpg package/iamlars-theme/ 2>/dev/null || true
 
           # 4. Create release ZIP
           cd package
