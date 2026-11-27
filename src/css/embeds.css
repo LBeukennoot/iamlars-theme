@@ -1,6 +1,6 @@
 .wp-block-embed,
 .wp-block-embed-youtube {
-  @apply overflow-hidden rounded-2xl border border-white/10 shadow-xl;
+  @apply overflow-hidden rounded-2xl border border-white/10 shadow-xl h-full;
 }
 
 .wp-block-embed__wrapper {
@@ -14,5 +14,5 @@
 .wp-block-embed,
 .wp-block-video,
 .wp-block-video video {
-  @apply overflow-hidden! rounded-3xl! shadow-none!;
+  @apply rounded-3xl! shadow-none!;
 }
