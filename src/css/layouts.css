@@ -16,8 +16,8 @@
    Columns
    -------------------------------------------------------------------------- */
 
-.wp-block-columns {
-  /* @apply flex flex-col! md:flex-row! gap-6 my-8; */
+.wp-block-column {
+  @apply flex flex-col gap-5;
 }
 
 .wp-block-column {

@@ -3,13 +3,19 @@ p,
 li,
 h1,
 h2,
-h3 {
+h3,
+h4,
+h5,
+h6 {
   @apply text-left text-secondary;
 }
 
 h1,
 h2,
-h3 {
+h3,
+h4,
+h5,
+h6 {
   @apply font-display;
 }
 
@@ -22,11 +28,27 @@ h1 {
 }
 
 h2 {
-  @apply text-4xl font-bold;
+  @apply text-5xl font-bold;
 }
 
 h3 {
+  @apply text-4xl font-black;
+}
+
+h4 {
+  @apply text-3xl font-black;
+}
+
+h4 {
   @apply text-2xl font-black;
+}
+
+h5 {
+  @apply text-xl font-black;
+}
+
+h6 {
+  @apply text-lg font-black;
 }
 
 li {
