@@ -24,7 +24,7 @@ $gallery_data = array_map(function ($post) {
         'id'         => $post->ID,
         'title'      => get_the_title($post),
         'permalink'  => get_permalink($post),
-        'image'      => get_the_post_thumbnail_url($post, 'large') ?: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80',
+        'image'      => get_the_post_thumbnail_url($post, 'large') ?: '',
         'excerpt'    => wp_trim_words(get_the_excerpt($post), 10),
         'categories' => $cat_list,
     );
